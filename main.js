@@ -1,4 +1,6 @@
 import App from './App'
+// 引入vant
+import 'vant/lib/index.css';
 
 // #ifndef VUE3
 import Vue from 'vue'

@@ -1,30 +1,5 @@
 import request from '@/utils/request.js'
 
-const eventList = [
-	{
-		id: 1,
-		type: 'love',
-		className: 'icon-Love00002',
-		startTime: '202-01-01',
-		diffDays: 100
-	},
-	{
-		id: 2,
-		type: 'marry',
-		className: 'icon-jiehunzhao',
-		startTime: '2023-04-27',
-		diffDays: 200
-	},
-	{
-		id: 3,
-		type: 'menses',
-		className: 'icon-weishengjin',
-		lastTime: '2023-01-01',
-		startTime: '2023-04-27',
-		diffDays: 100
-	}
-];
-
 export const getEventCategoryList = async () => {
 	return [{
 			id: 1,
@@ -85,5 +60,8 @@ export const deleteEvent = async id => {
  *  获取姨妈日的记录
  */
 export const getMensesList = async () => {
-	return eventList.filter(event=>event.type == 'menses');
+	return request({
+		url: "/events/menses",
+		method: "GET",
+	}) 
 }
