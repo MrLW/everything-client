@@ -8,7 +8,8 @@ export const getRecordDayLoveMoment = async () => {
 		url: '/recordDayLoveMoment',
 		method: 'GET',
 	});
-}
+};
+
 /**
  * 创建恋爱顺间
  * @param {*} data 
@@ -20,7 +21,8 @@ export const createRecordDayLoveMoment = async (data) => {
 		method: 'POST',
 		data
 	});
-}
+};
+
 /**
  * 点赞瞬间id
  * @param {*} id 瞬间id
@@ -28,7 +30,29 @@ export const createRecordDayLoveMoment = async (data) => {
  */
 export const loveRecordDayLoveMoment = async id => {
 	return request({
-		url: '/recordDayLoveMoment/'+id + '/love',
+		url: '/recordDayLoveMoment/' + id + '/love',
 		method: 'PATCH',
 	});
-}
+};
+
+/**
+ *  瞬间详情
+ */
+export const momentDetail = id => {
+	return request({
+		url: '/recordDayLoveMoment/' + id,
+		method: 'GET',
+	});
+};
+
+/**
+ * 收藏瞬间id
+ * @param {*} id 瞬间id
+ * @returns 
+ */
+export const starRecordDayLoveMoment = async id => {
+	return request({
+		url: '/recordDayLoveMoment/' + id + '/star',
+		method: 'PATCH',
+	});
+};

@@ -1,3 +1,3 @@
 export default { //存放变量的容器
-	baseUrl: 'http://localhost:3000'
+	baseUrl: 'http://192.168.20.221:3000'
 }
