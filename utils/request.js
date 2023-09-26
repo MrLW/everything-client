@@ -34,7 +34,6 @@ function service(options = {}) {
 		};
 		options.fail = (err) => {
 			// 请求失败弹窗
-			console.log("请求失败: ", err);
 			uni.showToast({
 				icon: 'none',
 				duration: 3000,

@@ -5,21 +5,57 @@
 			"style": {
 				"navigationBarTitleText": "Everything"
 			}
+		},
+		{
+			"path": "pages/recordDayIndex/recordDayIndex",
+			"style": {
+				"navigationBarTitleText": "记日",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mensesDetail/mensesDetail",
+			"style": {
+				"navigationBarTitleText": "姨妈日",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/loveDetail/loveDetail",
+			"style": {
+				"navigationBarTitleText": "恋爱日",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/marryDetail/marryDetail",
+			"style": {
+				"navigationBarTitleText": "结婚日",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/birthdayDetail/birthdayDetail",
+			"style": {
+				"navigationBarTitleText": "出生日",
+				"enablePullDownRefresh": false
+			}
 		}
+	   
         ,{
-            "path" : "pages/recordDayIndex/recordDayIndex",
+            "path" : "pages/loveDetail/createMoment/createMoment",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "记日",
+                "navigationBarTitleText": "记录恋爱时刻",
                 "enablePullDownRefresh": false
             }
             
         }
         ,{
-            "path" : "pages/mensesDetail/mensesDetail",
+            "path" : "pages/loveDetail/momentDetail/momentDetail",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "瞬间",
                 "enablePullDownRefresh": false
             }
             
@@ -33,8 +69,6 @@
 	},
 	"uniIdRouter": {},
 	"tabBar": {
-		"list": [
-			
-		]
+		"list": []
 	}
 }
