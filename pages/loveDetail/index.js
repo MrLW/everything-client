@@ -1,4 +1,5 @@
 import {
+	computed,
 	onMounted,
 	reactive,
 	ref
@@ -7,10 +8,12 @@ import {
 	onShow
 } from "@dcloudio/uni-app"
 import {
+	createComment,
 	getRecordDayLoveMoment,
 	loveRecordDayLoveMoment,
 	momentDetail,
 	starRecordDayLoveMoment,
+	getCommentList,
 } from '../../api/recordDay'
 import {
 	stopPropagation
@@ -20,7 +23,11 @@ import {
  */
 export const momentList = reactive([])
 
-export let currentMoment = ref({})
+export const currentMoment = ref({})
+
+export const commentText = ref('')
+
+export const commentList = reactive([]);
 /**
  *  进入到瞬间详情
  */
@@ -40,7 +47,6 @@ export const goCreateMomentPage = () => {
 }
 
 export const getNewMomentList = async () => {
-	console.log("#######getNewMomentList");
 	const res = await getRecordDayLoveMoment();
 	momentList.splice(0, 10000, ...res);
 }
@@ -71,5 +77,31 @@ export const star = id => {
  *  根据id 获取瞬间详情
  */
 export const getMomentById = async id => {
-	return momentDetail(id)
+	const res = await momentDetail(id)
+	currentMoment.value = res;
 }
+
+/**
+ *  添加评论
+ */
+export const addComment = async (momentId) => {
+	createComment({
+		content: commentText.value,
+		momentId: ~~momentId
+	}).then(() => {
+		getCommentListById(momentId)
+	}).then(() => {
+		commentText.value = ''
+	})
+}
+/**
+ *  获取评价列表
+ */
+export const getCommentListById = async momentId => {
+	const res = await getCommentList(momentId)
+	commentList.splice(0, 100000, ...res);
+}
+/**
+ *  评价数量
+ */
+export const commentCount = computed(() => commentList.length)

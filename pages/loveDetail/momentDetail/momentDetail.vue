@@ -9,14 +9,28 @@
 			<view class="title">{{currentMoment.title}}</view>
 			<view class="content">{{currentMoment.content}}</view>
 		</view>
-
-		<view class="commentList">
-
-		</view>
-
+		<van-divider />
+		<scroll-view class="commentList" scroll-y>
+			<view class="commentItem" v-for="comment in commentList">
+				<view class="portrait">
+					<image src="../../../static/logo.png" mode=""></image>
+				</view>
+				<view class="content">
+					<text class="nickname">情感与理智</text>
+					<view class="text">{{comment.content}}</view>
+				</view>
+				<van-divider />
+			</view>
+			<view class="end">
+				- THE END -
+			</view>
+		</scroll-view>
 		<view class="commentInfo">
 			<view class="comment">
-				<van-field v-model="value" placeholder="留下你的想法..." class="commentText" />
+				<form action="#">
+					<input type="text" class="commentText" placeholder="留下你的想法..." @keyup.enter="addComment(id)"
+						ref="commentTextRef" confirm-type="send" @confirm="addComment(id)" v-model="commentText" />
+				</form>
 			</view>
 			<view class="funcs">
 				<view class="funcItem" @click="love(id, $event, 'detail')">
@@ -27,8 +41,8 @@
 				<view class="funcItem" @click="star(id)">
 					<uni-icons class="icons" type="star" size="30"></uni-icons><text>{{currentMoment.stars}}</text>
 				</view>
-				<view class="funcItem">
-					<uni-icons class="icons" type="chat" size="30"></uni-icons><text>111</text>
+				<view class="funcItem" @click="goChat">
+					<uni-icons class="icons" type="chat" size="30"></uni-icons><text>{{commentCount}}</text>
 				</view>
 			</view>
 		</view>
@@ -37,20 +51,31 @@
 
 <script setup>
 	import {
-		onMounted
+		onMounted,
+		ref
 	} from 'vue';
 	import {
+		commentText,
+		commentList,
 		getMomentById,
 		currentMoment,
 		love,
 		star,
+		addComment,
+		getCommentListById,
+		commentCount,
 	} from '../index.js';
 	const props = defineProps(["id"]);
+	const commentTextRef = ref();
 
 	onMounted(async () => {
-		const res = await getMomentById(props.id);
-		currentMoment.value = res;
+		getMomentById(props.id);
+		getCommentListById(props.id);
 	})
+	const goChat = () => {
+		console.log("#goChat");
+		commentTextRef.value.$el.focus();
+	}
 </script>
 
 <style lang="scss">
@@ -82,17 +107,72 @@
 		}
 
 
+		.commentList {
+			// padding: 0 20rpx;
+
+			.commentItem {
+				display: flex;
+				height: 90rpx;
+				margin: 20rpx 20rpx;
+				padding-bottom: 15rpx;
+				border-bottom: 1rpx solid black;
+
+				.portrait {
+					image {
+						width: 80rpx;
+						height: 80rpx;
+						border-radius: 50%;
+					}
+
+				}
+
+				.content {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					margin-left: 20rpx;
+
+					.nickname {
+						font-size: 30rpx;
+						color: darkgray;
+					}
+
+					.text {
+						font-size: 32rpx;
+					}
+				}
+			}
+
+
+			.end {
+				height: 400rpx;
+				text-align: center;
+				font-size: 20rpx;
+				color: darkgrey;
+				margin-top: 20rpx
+			}
+		}
+
+
+
 		.commentInfo {
-			margin: 0 20rpx;
-			margin-bottom: 50rpx;
+			background-color: white;
+			border-top: 1rpx solid black;
+			bottom: 0;
+			position: fixed;
+			width: 90%;
+			height: 70rpx;
+			padding: 30rpx;
+
 			display: flex;
+			align-items: center;
 			justify-content: space-between;
 
 			.funcs {
 				display: flex;
 				justify-content: space-around;
 				align-items: center;
-				width: 50%;
+				width: 40%;
 
 				.funcItem {
 					display: flex;
@@ -100,19 +180,16 @@
 					align-items: center;
 					font-size: 30rpx;
 				}
-
-				// .icons {
-				// 	margin: 0 10rpx;
-				// 	font-size: 10000rpx;
-				// }
 			}
 
 			.comment {
-				width: 50%;
+				width: 60%;
 
 				.commentText {
+					height: 70rpx;
 					background-color: #f6f6f6;
-					border-radius: 40rpx;
+					border-radius: 30rpx;
+					padding: 10rpx;
 				}
 			}
 		}

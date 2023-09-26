@@ -56,3 +56,26 @@ export const starRecordDayLoveMoment = async id => {
 		method: 'PATCH',
 	});
 };
+
+/**
+ *  创建评价
+ */
+export const createComment = async data => {
+	return request({
+		url: '/recordDayLoveComment',
+		method: 'POST',
+		data
+	});
+};
+/**
+ *  评价列表
+ */
+export const getCommentList = async momentId => {
+	return request({
+		url: '/recordDayLoveComment',
+		method: 'GET',
+		data: {
+			momentId
+		}
+	});
+}

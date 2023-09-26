@@ -3,7 +3,8 @@
 
 		<view class="imageControl">
 			<view class="images">
-				<image :src="item" mode="" v-for="(item, index) in moment.images" @click="previewImage(item)" @longpress="showDeleteDialog(index)"></image>
+				<image :src="item" mode="" v-for="(item, index) in moment.images" @click="previewImage(item)"
+					@longpress="showDeleteDialog(index)"></image>
 			</view>
 			<van-uploader :after-read="afterRead" />
 		</view>
@@ -27,8 +28,8 @@
 		<view>
 			<!-- 提示窗示例 -->
 			<uni-popup ref="alertDialog" type="dialog">
-				<uni-popup-dialog type="error" cancelText="取消" confirmText="删除" title="删除警告" content="确认删除此图片？" @confirm="deleteImage"
-					></uni-popup-dialog>
+				<uni-popup-dialog type="error" cancelText="取消" confirmText="删除" title="删除警告" content="确认删除此图片？"
+					@confirm="deleteImage"></uni-popup-dialog>
 			</uni-popup>
 		</view>
 
@@ -40,8 +41,12 @@
 		reactive,
 		ref
 	} from 'vue';
-	import { createRecordDayLoveMoment } from '../../../api/recordDay';
-	import { showImagePreview } from 'vant';
+	import {
+		createRecordDayLoveMoment
+	} from '../../../api/recordDay';
+	import {
+		showImagePreview
+	} from 'vant';
 	const moment = reactive({
 		title: '',
 		content: '',
@@ -65,17 +70,17 @@
 	/**
 	 *  发布瞬间
 	 */
-	const publish = async ()=> {
+	const publish = async () => {
 		createRecordDayLoveMoment(moment).then(() => {
 			uni.showToast({
-				title:"发布成功",
-				icon:'none'
+				title: "发布成功",
+				icon: 'none'
 			})
-			uni.navigateBack().then(() =>{
+			uni.navigateBack().then(() => {
 				console.log("返回成功")
 			}).catch(err => {
 				console.log("返回失败")
-				
+
 			})
 		})
 	}
@@ -104,6 +109,7 @@
 <style lang="scss">
 	.container {
 		height: 100%;
+
 		.imageControl {
 			padding: 30rpx 50rpx;
 			display: flex;

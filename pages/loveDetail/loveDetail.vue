@@ -47,9 +47,9 @@
 		onShow,
 	} from "@dcloudio/uni-app"
 	import {
+		momentList,
 		getMomentDetailPage,
 		goCreateMomentPage,
-		momentList,
 		getNewMomentList,
 		love
 	} from './index.js'
