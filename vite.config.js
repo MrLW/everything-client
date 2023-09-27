@@ -12,7 +12,7 @@ export default defineConfig({
 	plugins: [
 		uni(),
 		Components({
-			resolvers: [VantResolver()],
+			// resolvers: [VantResolver()],
 		}),
 	],
 });

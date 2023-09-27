@@ -15,9 +15,7 @@ import {
 	starRecordDayLoveMoment,
 	getCommentList,
 } from '../../api/recordDay'
-import {
-	stopPropagation
-} from 'vant/lib/utils'
+
 /**
  *  恋爱瞬间列表
  */

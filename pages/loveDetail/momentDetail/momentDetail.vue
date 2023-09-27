@@ -1,17 +1,16 @@
 <template>
 	<view class="container">
 		<view class="momentDetail">
-			<van-swipe class="swipeList" indicator-color="white">
-				<van-swipe-item class="swipeItem" v-for="image in  currentMoment.images">
+			<swiper class="swipeList" indicator-color="white" indicator-dots>
+				<swiper-item class="swipeItem" v-for="(image, index) in  currentMoment.images" :key="index">
 					<image :src="image" mode="aspectFit"></image>
-				</van-swipe-item>
-			</van-swipe>
+				</swiper-item>
+			</swiper>
 			<view class="title">{{currentMoment.title}}</view>
 			<view class="content">{{currentMoment.content}}</view>
 		</view>
-		<van-divider />
 		<scroll-view class="commentList" scroll-y>
-			<view class="commentItem" v-for="comment in commentList">
+			<view class="commentItem" v-for="comment in commentList" :key="comment.id">
 				<view class="portrait">
 					<image src="../../../static/logo.png" mode=""></image>
 				</view>
@@ -19,7 +18,6 @@
 					<text class="nickname">情感与理智</text>
 					<view class="text">{{comment.content}}</view>
 				</view>
-				<van-divider />
 			</view>
 			<view class="end">
 				- THE END -
@@ -87,6 +85,8 @@
 
 		.momentDetail {
 			.swipeList {
+				height: 800rpx;
+
 				.swipeItem {
 					image {
 						width: 100%;
@@ -129,16 +129,16 @@
 				.content {
 					display: flex;
 					flex-direction: column;
-					justify-content: space-between;
+					justify-content: space-around;
 					margin-left: 20rpx;
 
 					.nickname {
-						font-size: 30rpx;
+						font-size: 26rpx;
 						color: darkgray;
 					}
 
 					.text {
-						font-size: 32rpx;
+						font-size: 26rpx;
 					}
 				}
 			}

@@ -2,28 +2,25 @@
 	<view class="container">
 
 		<view class="imageControl">
-			<view class="images">
-				<image :src="item" mode="" v-for="(item, index) in moment.images" @click="previewImage(item)"
-					@longpress="showDeleteDialog(index)"></image>
-			</view>
-			<van-uploader :after-read="afterRead" />
+			<uni-file-picker limit="3" @select="select"></uni-file-picker>
+
 		</view>
 
 		<view class="main">
 			<view class="title">
 				<!-- 可以使用 CellGroup 作为容器 -->
-				<van-cell-group inset>
-					<van-field v-model="moment.title" placeholder="分享你们此次恋爱的标题哦~" />
-
-					<van-field v-model="moment.content" rows="6" autosize type="textarea" placeholder="分享你们此次恋爱的内容哦~" />
+				<view inset>
+					<input v-model="moment.title" placeholder="分享你们此次恋爱的标题哦~"
+						placeholder-style="color:darkgrey; font-size:28rpx" />
+					<view class="line"></view>
+					<textarea v-model="moment.content" rows="6" autosize type="textarea" placeholder="添加正文"
+						placeholder-style="color:darkgrey; font-size:20rpx" />
 					<view class="btnControllList">
-						<van-switch v-model="moment.public" active-color="#f16c61" />
+						<lee-switch v-model="moment.public" color="#f16c61" />
 						<button class="btn" @click="publish">{{ moment.public ? '发布': '草稿' }}</button>
 					</view>
-				</van-cell-group>
-
+				</view>
 			</view>
-
 		</view>
 		<view>
 			<!-- 提示窗示例 -->
@@ -44,29 +41,42 @@
 	import {
 		createRecordDayLoveMoment
 	} from '../../../api/recordDay';
-	import {
-		showImagePreview
-	} from 'vant';
+
+
+	function base64(url, type) {
+		return new Promise((resolve, reject) => {
+			uni.request({
+				url: url,
+				method: "GET",
+				responseType: "arraybuffer",
+				success: (ress) => {
+					let base64 = wx.arrayBufferToBase64(ress.data); //把arraybuffer转成base64
+					base64 = "data:image/jpeg;base64," + base64; //不加上这串字符，在页面无法显示的哦
+					resolve(base64);
+				},
+				fail: (res) => reject(res.errMsg),
+			});
+		});
+	}
+
 	const moment = reactive({
 		title: '',
 		content: '',
-		public: false,
+		public: true,
 		images: []
 	})
 	let deleteImageIndex = 0;
 	/**
 	 *  选中文件之后的回调
 	 */
-	const afterRead = (file) => {
-		if (moment.images.length >= 3) {
-			uni.showToast({
-				title: "最多上传3张图片",
-				icon: 'none'
-			})
-			return false;
-		}
-		moment.images.push(file.content);
+	const select = async (file) => {
+		const tmpFile = file.tempFiles[0];
+		const imageUrl = await base64(tmpFile.url, 'jpg');
+		moment.images.push(imageUrl);
 	}
+
+
+
 	/**
 	 *  发布瞬间
 	 */
@@ -84,12 +94,7 @@
 			})
 		})
 	}
-	/**
-	 *  预览图片
-	 */
-	const previewImage = async (url) => {
-		showImagePreview([url])
-	}
+
 	/**
 	 *  弹出删除对话框
 	 */
@@ -126,8 +131,17 @@
 		}
 
 		.main {
+			padding: 20rpx 40rpx;
+
+			.line {
+				margin: 20rpx 0;
+				background-color: darkgrey;
+				width: 100%;
+				height: 1rpx;
+			}
+
 			.btnControllList {
-				padding: 20rpx 20rpx;
+				padding: 20rpx 0;
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
