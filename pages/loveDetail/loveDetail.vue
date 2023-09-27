@@ -1,32 +1,25 @@
 <template>
 	<view class="container">
-		<view class="header" v-if="false">
-			<text>张三 Love 李四 已经 </text>
-			<van-rolling-text class="my-rolling-text" :height="54" :start-num="1" :target-num="days" />
-			<text>天啦~</text>
-		</view>
 		<scroll-view class="main" scroll-y>
 			<view class="cardList">
-				<view class="cardItem" v-for="item in momentList" @click="getMomentDetailPage(item.id)">
+				<view class="cardItem" v-for="item in momentList" @click="getMomentDetailPage(item.id)" :key="item.id">
 					<uni-card is-shadow>
-						<image slot='cover' :src="item.cover" model="widthFix">
-						</image>
-						<van-text-ellipsis :content="item.title"
-							style="border-bottom: 1rpx solid darkgray;padding-bottom: 12rpx;" />
-						<template v-slot:actions>
-							<view class="card-actions">
-								<view class="card-actions-item portrait">
-									<van-image width="20" height="20" round
-										src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
-								</view>
-								<view class="card-actions-item" @click="love(item.id, $event, 'list')">
-									<!-- TODO 待处理 -->
-									<uni-icons :type="item.loves >= 10 ? 'heart-filled': 'heart' " size="18"
-										:color="item.loves >= 10 ? 'red': 'darkgray'"></uni-icons>
-									<text>{{ item.loves}}</text>
-								</view>
+						<image class="cover" :src="item.cover" model="widthFix"></image>
+						<view class="title">
+							{{item.title}}
+						</view>
+						<view class="userInfo">
+							<view class="info">
+								<image src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+								<view class="nickname">张三</view>
 							</view>
-						</template>
+							<view class="love">
+								<!-- TODO 待处理 -->
+								<uni-icons :type="item.loves >= 10 ? 'heart-filled': 'heart' " size="18"
+									:color="item.loves >= 10 ? 'red': 'darkgray'"></uni-icons>
+								<text>{{ item.loves}}</text>
+							</view>
+						</view>
 					</uni-card>
 				</view>
 			</view>
@@ -75,16 +68,6 @@
 			font-size: 30rpx;
 			font-weight: bold;
 			/* background-color: yellow; */
-
-			.my-rolling-text {
-				--van-rolling-text-background: #f16c61;
-				--van-rolling-text-color: white;
-				--van-rolling-text-font-size: 24px;
-				--van-rolling-text-gap: 6px;
-				--van-rolling-text-item-border-radius: 5px;
-				--van-rolling-text-item-width: 40px;
-			}
-
 			flex: 1;
 		}
 
@@ -107,29 +90,42 @@
 						border-radius: 4rpx;
 					}
 
-					.card-actions {
+					.title {
+						border-bottom: 1rpx solid darkgray;
+						padding-bottom: 12rpx;
+						// 单行文本省略号固定写法
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+					}
+
+					.userInfo {
+						margin-top: 10rpx;
 						display: flex;
-						height: 40rpx;
 						justify-content: space-between;
+						align-items: center;
+						height: 60rpx;
 
-						.card-actions-item {
-							width: 100%;
-							flex: 1;
-							text-align: center;
+						.info {
 							display: flex;
-							justify-content: right;
 							align-items: center;
+							justify-content: space-around;
 
-							text {
-								margin-left: 6rpx;
+							image {
+								width: 40rpx;
+								height: 40rpx;
+								border-radius: 50%;
 							}
 
-							padding: 0 16rpx;
-							padding-bottom: 10rpx;
+							.nickname {
+								font-size: 20rpx;
+								margin-left: 10rpx;
+							}
 						}
 
-						.portrait {
-							justify-content: left;
+						.love {
+							display: flex;
+							align-items: center;
 						}
 					}
 				}

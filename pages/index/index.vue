@@ -7,7 +7,8 @@
 			</view>
 			<view class="content">
 				<view class="modules">
-					<view class="moduleItem" v-for="moduleItem in modules" :key="moduleItem.id" @click="goPage(moduleItem)">
+					<view class="moduleItem" v-for="moduleItem in modules" :key="moduleItem.id"
+						@click="goPage(moduleItem)">
 						<text class="iconfont icon-teshuriqi" :class="moduleItem.className"></text>
 						<text>
 							{{ moduleItem.name }}
@@ -26,13 +27,12 @@
 	} from 'vue'
 	const title = ref("Everhthing");
 	// 功能模块
-	const modules = reactive([
-		{
+	const modules = reactive([{
 			id: 3,
 			name: '记日',
 			className: 'icon-teshuriqi',
 			path: '/pages/recordDayIndex/recordDayIndex',
-		},{
+		}, {
 			id: 2,
 			name: '记事',
 			className: 'icon-jishiben'
@@ -42,7 +42,7 @@
 			name: '记账',
 			className: 'icon-jizhangben'
 		},
-		
+
 		{
 			id: 4,
 			name: '用户中心',
@@ -54,9 +54,9 @@
 			className: 'icon-jingqingqidai'
 		},
 	])
-	const goPage = function(moduleItem){
+	const goPage = function(moduleItem) {
 		uni.navigateTo({
-			url:moduleItem.path
+			url: moduleItem.path
 		})
 	}
 </script>
@@ -104,6 +104,7 @@
 					display: flex;
 					flex-direction: column;
 					justify-content: space-around;
+
 					.iconfont {
 						font-size: 40rpx;
 					}

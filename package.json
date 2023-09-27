@@ -9,9 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "vant": "^4.6.8"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@vant/auto-import-resolver": "^1.0.1",
     "unplugin-vue-components": "^0.25.2"
