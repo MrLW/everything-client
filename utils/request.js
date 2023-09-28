@@ -29,7 +29,7 @@ function service(options = {}) {
 				// 	url:"/pages/login/login"
 				// })
 				rejected(res)
-				
+
 			}
 		};
 		options.fail = (err) => {

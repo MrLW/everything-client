@@ -11,23 +11,26 @@ export function tryLogin(user) {
 // 注册
 export function regist(user) {
 	return request({
-		url: "/account/regist",
+		url: "/user/regist",
 		method: "POST",
 		data: user
 	})
 }
-// 用户信息
-export function info(){
+/**
+ * 根据openid 查找用户
+ * @param {Object} openid 微信openid	
+ */
+export function findByOpenId(openid) {
 	return request({
-		url: "/account/info",
+		url: "/user/" + openid,
 		method: "GET",
 	})
 }
 // 更新用户信息
-export function updateUser(user) {
+export function updateUser(openid, user) {
 	return request(({
-		url: "/account/updateUser",
-		method: 'PUT',
+		url: "/user/" + openid,
+		method: 'PATCH',
 		data: user
 	}))
 }
@@ -37,7 +40,9 @@ export function bindPhone(phone) {
 	return request({
 		url: "/account/bindPhone",
 		method: 'PUT',
-		data: { phone }
+		data: {
+			phone
+		}
 	})
 }
 // 重置密码
@@ -45,7 +50,9 @@ export function resetPassword(password) {
 	return request({
 		url: "/account/resetPassword",
 		method: 'PUT',
-		data: { password }
+		data: {
+			password
+		}
 	})
 }
 
@@ -58,12 +65,12 @@ export function uploadPortrait(portraitPath) {
 		filePath: portraitPath,
 		name: 'file',
 		header: {
-			"Authorization":token
+			"Authorization": token
 		},
 		success(res) {
-			console.info("上传文件:",res)
+			console.info("上传文件:", res)
 		},
-		fail(err,b) {
+		fail(err, b) {
 			console.error(err, b)
 		},
 	})
