@@ -1,17 +1,13 @@
 <template>
-	<view ref="parent">
-		<view class="child" ref="child">
-			
-		</view>
+	<view>
+		<button open-type="getUserInfo" @getuserinfo="getuserinfo">getuserinfo</button>
 	</view>
 </template>
 
 <script setup>
-import { ref } from "vue";
-	const parent = ref()
-	const child = ref()
-	console.log("parent: ", parent);
-	console.log("child: ", child);
+	const getuserinfo = (res) => {
+		console.log("getuserinfo", res);
+	}
 </script>
 
 <style>

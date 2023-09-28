@@ -1,51 +1,74 @@
 @font-face {
-	font-family: "iconfont";
-	/* Project id 4256690 */
-	src: url('http://at.alicdn.com/t/c/font_4256690_1ntm4bfmu1yg.woff2?t=1695029930192') format('woff2'),
-		url('http://at.alicdn.com/t/c/font_4256690_1ntm4bfmu1yg.woff?t=1695029930192') format('woff'),
-		url('http://at.alicdn.com/t/c/font_4256690_1ntm4bfmu1yg.ttf?t=1695029930192') format('truetype');
+  font-family: "iconfont"; /* Project id 4256690 */
+  src: url('http://at.alicdn.com/t/c/font_4256690_pi1mf8wmapc.woff2?t=1695880208039') format('woff2'),
+       url('http://at.alicdn.com/t/c/font_4256690_pi1mf8wmapc.woff?t=1695880208039') format('woff'),
+       url('http://at.alicdn.com/t/c/font_4256690_pi1mf8wmapc.ttf?t=1695880208039') format('truetype');
 }
 
 .iconfont {
-	font-family: "iconfont" !important;
-	font-size: 16px;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-jianyi:before {
+  content: "\e6cf";
+}
+
+.icon-shezhi:before {
+  content: "\e70f";
+}
+
+.icon-morentouxiang1:before {
+  content: "\e60a";
+}
+
+.icon-morentouxiang:before {
+  content: "\e604";
+}
+
+.icon-camera:before {
+  content: "\e86e";
+}
+
+.icon-siwangbinzang:before {
+  content: "\e619";
 }
 
 .icon-shengri:before {
-	content: "\e7a6";
+  content: "\e7a6";
 }
 
 .icon-weishengjin:before {
-	content: "\e60c";
+  content: "\e60c";
 }
 
 .icon-jiehunzhao:before {
-	content: "\e673";
+  content: "\e673";
 }
 
 .icon-Love00002:before {
-	content: "\eb6b";
+  content: "\eb6b";
 }
 
 .icon-yonghuzhongxin:before {
-	content: "\e600";
+  content: "\e600";
 }
 
 .icon-jingqingqidai:before {
-	content: "\e618";
+  content: "\e618";
 }
 
 .icon-teshuriqi:before {
-	content: "\e641";
+  content: "\e641";
 }
 
 .icon-jizhangben:before {
-	content: "\e61c";
+  content: "\e61c";
 }
 
 .icon-jishiben:before {
-	content: "\e616";
+  content: "\e616";
 }
