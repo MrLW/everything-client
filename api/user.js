@@ -20,12 +20,37 @@ export function regist(user) {
  * 根据openid 查找用户
  * @param {Object} openid 微信openid	
  */
-export function findByOpenId(openid) {
+export function loginByWx(openid) {
 	return request({
-		url: "/user/" + openid,
+		url: "/user/loginByWx",
+		method: "POST",
+		data: {
+			openid
+		}
+	})
+}
+
+/**
+ * 获取用户信息
+ * @returns 用户信息
+ */
+export function info() {
+	return request({
+		url: "/user/info",
 		method: "GET",
 	})
 }
+
+/**
+ * 退出登录
+ */
+export function userLogout() {
+	return request({
+		url: "/user/logout",
+		method: "POST",
+	})
+}
+
 // 更新用户信息
 export function updateUser(openid, user) {
 	return request(({

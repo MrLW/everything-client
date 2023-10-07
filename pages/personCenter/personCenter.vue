@@ -46,8 +46,13 @@
 		user,
 		goLogin,
 		goSetting,
-		goAdvice
+		goAdvice,
+		userinfo
 	} from './index.js'
+	import { onMounted } from 'vue'
+	onMounted(function () {
+		userinfo()
+	})
 </script>
 
 <style lang="scss">
