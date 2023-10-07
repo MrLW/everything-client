@@ -25,9 +25,7 @@ export const getuserinfo = async () => {
 	let openid = uni.getStorageSync("openid")
 	if (openid) {
 		const res = await findByOpenId(openid)
-		user.value = res || {
-			openid
-		};
+		user.value = res.data || { openid };
 	} else {
 		uni.login({
 			success: async (res) => {
@@ -40,9 +38,7 @@ export const getuserinfo = async () => {
 
 				const user = await findByOpenId(openid)
 
-				user.value = user || {
-					openid
-				};
+				user.value = res.data || { openid };
 			}
 		})
 	}

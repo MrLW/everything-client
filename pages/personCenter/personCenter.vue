@@ -14,16 +14,16 @@
 
 			<view class="funset" v-show="user.avatarUrl">
 				<view class="funitem exps">
-					<utext>{{ user.exps }}</utext>
-					<utext>经验</utext>
+					<text>{{ user.exps }}</text>
+					<text>经验</text>
 				</view>
 				<view class="funitem subs">
 					<text>{{ user.subs }}</text>
 					<text>关注</text>
 				</view>
 				<view class="funitem loves">
-					<utext>{{ user.loves }}</utext>
-					<utext>收藏</utext>
+					<text>{{ user.loves }}</text>
+					<text>收藏</text>
 				</view>
 			</view>
 
@@ -45,17 +45,9 @@
 	import {
 		user,
 		goLogin,
-		getuserinfo,
 		goSetting,
 		goAdvice
 	} from './index.js'
-	import {
-		onMounted
-	} from "vue";
-
-	onMounted(function() {
-		getuserinfo()
-	})
 </script>
 
 <style lang="scss">
