@@ -2,9 +2,10 @@ import {
 	jscode2session
 } from '../../api/weixin';
 import {
-	findByOpenId,
-	regist,
-	updateUser
+	loginByWx,
+	updateUser,
+	info,
+	userLogout
 } from '../../api/user.js'
 import {
 	ref
@@ -19,15 +20,15 @@ export const user = ref({
 	loves: 0
 })
 /**
- *  获取用户信息
+ *  微信授权登录
  */
-export const getuserinfo = async () => {
+export const login = async () => {
 	let openid = uni.getStorageSync("openid")
 	if (openid) {
-		const res = await findByOpenId(openid)
-		user.value = res || {
-			openid
-		};
+		const res = await loginByWx(openid)
+		if (res.data.token) {
+			uni.setStorageSync("token", res.data.token);
+		}
 	} else {
 		uni.login({
 			success: async (res) => {
@@ -38,14 +39,22 @@ export const getuserinfo = async () => {
 				openid = openRes.openid;
 				uni.setStorageSync("openid", openid);
 
-				const user = await findByOpenId(openid)
-
-				user.value = user || {
-					openid
-				};
+				const user = await loginByWx(openid)
+				// 存储token
+				if (user.data.token) {
+					uni.setStorageSync("token", user.data.token);
+				}
 			}
 		})
 	}
+}
+/**
+ *  获取用户信息
+ */
+export const userinfo = async () => {
+	const res = await info();
+	console.info("@@@userinfo", res)
+	user.value = res.data;
 }
 
 /**
@@ -126,13 +135,13 @@ export function goSetting() {
 /**
  *  退出登录
  */
-export function logout() {
+export async function logout() {
 	user.value = {};
 	uni.removeStorageSync("openid")
+	const token = await uni.getStorageInfoSync("token")
+	userLogout(token);
 	// 回到首页
-	uni.navigateBack().then(() => {
-		console.log("~~~~~~~~", user);
-	})
+	uni.navigateBack().then(() => {})
 }
 
 export function goAdvice() {

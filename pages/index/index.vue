@@ -24,41 +24,19 @@
 	import {
 		ref,
 		reactive,
+		onMounted,
 	} from 'vue'
-	const title = ref("Everhthing");
-	// 功能模块
-	const modules = reactive([{
-			id: 3,
-			name: '记日',
-			className: 'icon-teshuriqi',
-			path: '/pages/recordDayIndex/recordDayIndex',
-		}, {
-			id: 2,
-			name: '记事',
-			className: 'icon-jishiben'
-		},
-		{
-			id: 1,
-			name: '记账',
-			className: 'icon-jizhangben'
-		},
-
-		{
-			id: 4,
-			name: '用户中心',
-			className: 'icon-yonghuzhongxin'
-		},
-		{
-			id: 5,
-			name: '敬请期待',
-			className: 'icon-jingqingqidai'
-		},
-	])
-	const goPage = function(moduleItem) {
-		uni.navigateTo({
-			url: moduleItem.path
-		})
-	}
+	import {
+		title,
+		modules,
+		goPage,
+	} from '.';
+	import {
+		login
+	} from '../personCenter';
+	onMounted(function() {
+		login()
+	})
 </script>
 
 <style lang="scss">

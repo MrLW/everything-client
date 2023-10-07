@@ -120,7 +120,6 @@
 		},
 		async mounted() {
 			const recordDayCategoryList = await getRecordDayCategoryList();
-			console.info("#recordDayCategoryList: ", recordDayCategoryList);
 			recordDayCategoryList.forEach(item => item.text = item.name);
 			this.eventCategoryList.splice(0, 0, ...recordDayCategoryList)
 			this.getAllEvent()
