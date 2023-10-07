@@ -1,26 +1,11 @@
 import request from '@/utils/request.js'
 import env from '../utils/env'
-// 登录
-export function tryLogin(user) {
-	return request({
-		url: "/account/login",
-		method: "POST",
-		data: user
-	})
-}
-// 注册
-export function regist(user) {
-	return request({
-		url: "/user/regist",
-		method: "POST",
-		data: user
-	})
-}
+
 /**
- * 根据openid 查找用户
+ * 微信登录
  * @param {Object} openid 微信openid	
  */
-export function loginByWx(openid) {
+export async function loginByWx(openid) {
 	return request({
 		url: "/user/loginByWx",
 		method: "POST",
@@ -34,7 +19,7 @@ export function loginByWx(openid) {
  * 获取用户信息
  * @returns 用户信息
  */
-export function info() {
+export async function info() {
 	return request({
 		url: "/user/info",
 		method: "GET",
@@ -44,7 +29,7 @@ export function info() {
 /**
  * 退出登录
  */
-export function userLogout() {
+export async function userLogout() {
 	return request({
 		url: "/user/logout",
 		method: "POST",
@@ -52,7 +37,7 @@ export function userLogout() {
 }
 
 // 更新用户信息
-export function updateUser(openid, user) {
+export async function updateUser(openid, user) {
 	return request(({
 		url: "/user/" + openid,
 		method: 'PATCH',
@@ -61,7 +46,7 @@ export function updateUser(openid, user) {
 }
 
 // 绑定手机号
-export function bindPhone(phone) {
+export async function bindPhone(phone) {
 	return request({
 		url: "/account/bindPhone",
 		method: 'PUT',
@@ -71,7 +56,7 @@ export function bindPhone(phone) {
 	})
 }
 // 重置密码
-export function resetPassword(password) {
+export async function resetPassword(password) {
 	return request({
 		url: "/account/resetPassword",
 		method: 'PUT',
@@ -82,7 +67,7 @@ export function resetPassword(password) {
 }
 
 // 上传头像
-export function uploadPortrait(portraitPath) {
+export async function uploadPortrait(portraitPath) {
 	let url = `${env.baseUrl}/account/uploadPortrait`;
 	const token = uni.getStorageSync("token")
 	uni.uploadFile({

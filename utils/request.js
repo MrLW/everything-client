@@ -11,10 +11,9 @@ function service(options = {}) {
 	// resolved是返回成功数据，rejected返回错误数据
 	return new Promise((resolved, rejected) => {
 		options.success = (res) => {
-			console.info("~~~~~~~~~", res)
 			// 如果请求回来的状态码不是200则执行以下操作
 			if (res.statusCode >= 200 && res.statusCode < 400) {
-				resolved(res.data)
+				resolved(res.data.data); // 第一个data是 axios的data, 第二个data是后端返回的数据data
 			} else {
 				// 非成功状态码弹窗
 				uni.showToast({
