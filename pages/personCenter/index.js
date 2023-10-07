@@ -26,8 +26,8 @@ export const login = async () => {
 	let openid = uni.getStorageSync("openid")
 	if (openid) {
 		const res = await loginByWx(openid)
-		if (res.data.token) {
-			uni.setStorageSync("token", res.data.token);
+		if (res.token) {
+			uni.setStorageSync("token", res.token);
 		}
 	} else {
 		uni.login({
@@ -41,8 +41,8 @@ export const login = async () => {
 
 				const user = await loginByWx(openid)
 				// 存储token
-				if (user.data.token) {
-					uni.setStorageSync("token", user.data.token);
+				if (user.token) {
+					uni.setStorageSync("token", user.token);
 				}
 			}
 		})
@@ -53,63 +53,22 @@ export const login = async () => {
  */
 export const userinfo = async () => {
 	const res = await info();
-	console.info("@@@userinfo", res)
-	user.value = res.data;
+	user.value = res;
 }
 
 /**
- *  授权获取用户信息
+ *  跳转到登录页面
  */
-// export const getuserinfo = async () => {
-// 	// 查看当前openid
-// 	let openid = uni.getStorageSync("openid");
-// 	if (!openid) {
-// 		uni.login({
-// 			success: async (res) => {
-// 				const {
-// 					code
-// 				} = res;
-// 				const openRes = await jscode2session(code);
-// 				openid = openRes.openid;
-// 				uni.setStorageSync("openid", openid);
-
-// 				const success = await getUserInfoByOpenId();
-// 				if (success) return;
-
-// 				// 该接口只能在基础库小于3.0
-// 				/*uni.getUserProfile({
-// 					desc: "授权登录",
-// 					provider: 'weixin',
-// 					withCredentials: true,
-// 					success(res) {
-// 						const {
-// 							userInfo
-// 						} = res
-// 						user.value.avatarUrl = userInfo.avatarUrl;
-// 						user.value.username = userInfo.nickName;
-// 						user.value.sex = userInfo.gender;
-// 						user.value.country = userInfo.country;
-// 						user.value.province = userInfo.province;
-// 						user.value.city = userInfo.city;
-// 						user.value.openid = openid;
-// 						// 调用后端接口, 创建用户
-// 						regist(user.value);
-// 					},
-// 					fail(err) {
-// 						console.log(err);
-// 					}
-// 				})*/
-// 			}
-// 		})
-// 	}
-
 export const goLogin = () => {
 	uni.navigateTo({
 		url: "/pages/personCenter/login/login",
 	})
 }
 
-
+/**
+ * 选择头像
+ * @param {*} res 
+ */
 export const chooseavatar = (res) => {
 	user.value.avatarUrl = res.detail.avatarUrl;
 	// 更新用户头像
