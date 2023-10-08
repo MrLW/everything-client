@@ -28,10 +28,13 @@ export const createRecordDayLoveMoment = async (data) => {
  * @param {*} id 瞬间id
  * @returns 
  */
-export const loveRecordDayLoveMoment = async id => {
+export const loveRecordDayLoveMoment = async (id, incre) => {
 	return request({
 		url: '/recordDayLoveMoment/' + id + '/love',
 		method: 'PATCH',
+		data: {
+			incre
+		}
 	});
 };
 
@@ -50,10 +53,13 @@ export const momentDetail = id => {
  * @param {*} id 瞬间id
  * @returns 
  */
-export const starRecordDayLoveMoment = async id => {
+export const starRecordDayLoveMoment = async (id, incre) => {
 	return request({
 		url: '/recordDayLoveMoment/' + id + '/star',
 		method: 'PATCH',
+		data: {
+			incre
+		}
 	});
 };
 

@@ -49,8 +49,10 @@
 		goAdvice,
 		userinfo
 	} from './index.js'
-	import { onMounted } from 'vue'
-	onMounted(function () {
+	import {
+		onMounted
+	} from 'vue'
+	onMounted(function() {
 		userinfo()
 	})
 </script>
