@@ -15,7 +15,9 @@ import {
 	starRecordDayLoveMoment,
 	getCommentList,
 } from '../../api/recordDay'
-
+import {
+	user
+} from '../personCenter/index.js'
 /**
  *  恋爱瞬间列表
  */
@@ -51,24 +53,27 @@ export const getNewMomentList = async () => {
 /**
  *  点赞
  */
-export const love = (id, event, type) => {
-	console.log("###momentList.length: ", momentList.length, currentMoment);
-	if (type == 'detail') {
-		currentMoment.value.loves++;
-		loveRecordDayLoveMoment(id);
-	} else if (type == 'list') {
-		loveRecordDayLoveMoment(id).then(() => getNewMomentList())
-	}
-	// 防止在列表冒泡
-	event.stopPropagation()
+export const love = (id, event) => {
+	const cur = momentList.find(moment => moment.id == id);
+	let incre = cur.loved ? -1 : 1;
+	cur.loves += incre;
+	cur.loved = !cur.loved;
+	user.value.loves += incre;
+	loveRecordDayLoveMoment(id, incre);
+
 }
 
 /**
  *  收藏
  */
 export const star = id => {
-	currentMoment.value.stars++;
-	starRecordDayLoveMoment(id)
+
+	const incre = currentMoment.value.stared ? -1 : 1
+	currentMoment.value.stars += incre;
+	user.value.stars += incre;
+
+	currentMoment.value.stared = !currentMoment.value.stared;
+	starRecordDayLoveMoment(id, incre)
 }
 
 /**

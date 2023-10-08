@@ -13,10 +13,9 @@
 								<image src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
 								<view class="nickname">张三</view>
 							</view>
-							<view class="love">
-								<!-- TODO 待处理 -->
-								<uni-icons :type="item.loves >= 10 ? 'heart-filled': 'heart' " size="18"
-									:color="item.loves >= 10 ? 'red': 'darkgray'"></uni-icons>
+							<view class="love" @click.stop="love(item.id, $event)">
+								<uni-icons :type="item.loved ? 'heart-filled': 'heart' " size="20"
+									:color="item.loved ? 'red': 'darkgray'"></uni-icons>
 								<text>{{ item.loves}}</text>
 							</view>
 						</view>

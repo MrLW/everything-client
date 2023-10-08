@@ -12,10 +12,10 @@
 		<scroll-view class="commentList" scroll-y>
 			<view class="commentItem" v-for="comment in commentList" :key="comment.id">
 				<view class="portrait">
-					<image src="../../../static/logo.png" mode=""></image>
+					<image :src="comment.et_user.avatarUrl" mode=""></image>
 				</view>
 				<view class="content">
-					<text class="nickname">情感与理智</text>
+					<text class="nickname">{{ comment.et_user.username }}</text>
 					<view class="text">{{comment.content}}</view>
 				</view>
 			</view>
@@ -31,13 +31,15 @@
 				</form>
 			</view>
 			<view class="funcs">
-				<view class="funcItem" @click="love(id, $event, 'detail')">
-					<uni-icons :type="currentMoment.loves >= 10 ? 'heart-filled': 'heart' "
-						:color="currentMoment.loves >= 10 ? 'red': 'darkgray'"
+				<view class="funcItem" @click="love(id, $event)">
+					<uni-icons :type="currentMoment.loved ? 'heart-filled': 'heart' "
+						:color="currentMoment.loved ? 'red': 'darkgray'"
 						size="30"></uni-icons><text>{{currentMoment.loves}}</text>
 				</view>
 				<view class="funcItem" @click="star(id)">
-					<uni-icons class="icons" type="star" size="30"></uni-icons><text>{{currentMoment.stars}}</text>
+					<uni-icons :type="currentMoment.stared ? 'star-filled': 'star' "
+						:color="currentMoment.stared ? 'gold': 'darkgray'" class="icons"
+						size="30"></uni-icons><text>{{currentMoment.stars}}</text>
 				</view>
 				<view class="funcItem" @click="goChat">
 					<uni-icons class="icons" type="chat" size="30"></uni-icons><text>{{commentCount}}</text>
@@ -109,6 +111,7 @@
 
 		.commentList {
 			// padding: 0 20rpx;
+			margin-top: 30rpx;
 
 			.commentItem {
 				display: flex;
