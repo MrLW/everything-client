@@ -20,7 +20,8 @@
 			<view class="popup-content">
 				<uni-forms ref="form" :rules="rules" :modelValue="eventItem">
 					<uni-forms-item label="类型" required class="formItem" name="type">
-						<uni-data-select :localdata="eventCategoryList" @change="changeEventType"></uni-data-select>
+						<uni-data-select :localdata="eventCategoryList" @change="changeEventType"
+							v-model="eventItem.type"></uni-data-select>
 					</uni-forms-item>
 					<uni-forms-item label="老公" class="formItem" v-if="eventItem.type == 'marry'" name="husband"
 						required>
@@ -55,8 +56,6 @@
 				</uni-forms>
 			</view>
 		</uni-popup>
-
-
 		<!-- 悬浮按钮 -->
 		<uni-fab ref="fab" :pattern="pattern" horizontal="right" @fabClick="showModePage('center')"></uni-fab>
 
@@ -91,9 +90,7 @@
 				pattern: {
 					buttonColor: "#f16c61"
 				},
-				eventItem: {
-
-				},
+				eventItem: {},
 				eventCategoryList: [],
 				eventList: [],
 				rules: {
@@ -120,6 +117,10 @@
 		},
 		async mounted() {
 			const recordDayCategoryList = await getRecordDayCategoryList();
+
+			// 为前端附加个字段
+			recordDayCategoryList.forEach(item => item.value = item.type)
+
 			recordDayCategoryList.forEach(item => item.text = item.name);
 			this.eventCategoryList.splice(0, 0, ...recordDayCategoryList)
 			this.getAllEvent()
@@ -128,11 +129,7 @@
 			showModePage(type) {
 				this.$refs.popup.open(type);
 			},
-			changeEventType(idx) {
-				const category = this.eventCategoryList.find(eventCategory => eventCategory.id == idx)
-				if (category) {
-					this.eventItem.type = category.type;
-				}
+			changeEventType() {
 				// 根据不同事件类型, 设置不同的校验规则
 				if (this.eventItem.type == 'marry') {
 					this.rules.username = this.rules.bf = this.rules.gf = null;
@@ -181,6 +178,13 @@
 			async submit() {
 				this.$refs.form.validate().then(async data => {
 					const item = JSON.parse(JSON.stringify(this.eventItem))
+					const menses = this.eventList.find(item => item.type == 'menses');
+					if (diffDays(menses.startTime, item.startTime) <= 15) {
+						return uni.showToast({
+							icon: 'none',
+							title: '距离您上次来姨妈不超过15天~',
+						})
+					}
 					await addEvent(item)
 					this.getAllEvent();
 					// 重置

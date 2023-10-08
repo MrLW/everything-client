@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 
-		<van-field v-model="goalAge" name="用户名" placeholder="请输入你想活到多少岁"
+		<input style="display: none;" v-model="goalAge" name="用户名" placeholder="请输入你想活到多少岁"
 			:rules="[{ required: true, message: '请输入你想活到多少岁' }]" input-align="center" type="number" />
 
 		<view class="startTime">
@@ -17,12 +17,12 @@
 			</view>
 		</view>
 
-		<view class="countDown">
+		<!-- <view class="countDown">
 			<view class="">生命卡倒计时：</view>
-			<van-count-down class="time bigFont" :time="time" format="DD 天 HH 时 mm 分 ss 秒" />
-		</view>
+			<uni-countdown :show-day="false" :second="1200001111100"></uni-countdown>
+		</view> -->
 		<view class="warn">
-			生命诚可贵, 请你珍惜你现在的时间!
+			生命诚可贵, 爱情价更高，若为自由故，两者皆可抛~
 		</view>
 	</view>
 </template>
@@ -30,38 +30,30 @@
 <script setup>
 	import {
 		computed,
+		onMounted,
 		ref
 	} from 'vue'
+
 	import {
+		goalAge,
+	} from '.'
+	import {
+		diffDays,
 		diffHours,
-		diffDays
+		diff
 	} from '../../utils';
-
-	let a = ref(0)
-	let b = ref(a.value + 1)
-
-	// 目标年龄
-	const goalAge = ref(100);
-
-
 	const props = defineProps(['startTime']);
+	let deathTime = computed(() => ~~new Date(startTime).getFullYear() + (~~goalAge.value));
 	// 出生年龄
 	let startTime = props.startTime;
-	// 死亡年龄 
-	let deathTime = computed(() => ~~new Date(startTime).getFullYear() + (~~goalAge.value));
 
 	// 计算 已存在的天数和小时
-	const days = ref(diffDays(props.startTime, new Date()));
-	const hours = ref(diffHours(props.startTime, new Date()));
+	const days = ref(diffDays(startTime, new Date()));
+	const hours = ref(diffHours(startTime, new Date()));
 	// 计算还剩的天数和小时
 	const days100 = computed(() => diffDays(new Date(), deathTime.value));
 	const hours100 = computed(() => diffHours(new Date(), deathTime.value));
-
-	let seconds = computed(() => hours100.value * 60 * 60);
-
-
-	// 计算倒计时
-	const time = computed(() => hours100.value * 60 * 60 * 1000);
+	const aliveRes = computed(() => diff(startTime, deathTime.value));
 </script>
 
 <style lang="scss">
@@ -70,8 +62,8 @@
 		height: 100%;
 		// 清除浮动
 		overflow: hidden;
-		
-		.bigFont{
+
+		.bigFont {
 			font-size: 40rpx;
 		}
 
