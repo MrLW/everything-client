@@ -30,12 +30,15 @@
 		title,
 		modules,
 		goPage,
+		getAllArea,
 	} from '.';
 	import {
 		login
 	} from '../personCenter';
+
 	onMounted(function() {
-		login()
+		login();
+		getAllArea()
 	})
 </script>
 

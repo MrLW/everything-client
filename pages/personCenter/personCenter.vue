@@ -8,24 +8,27 @@
 				</view>
 				<view class="username">{{ user.username }}</view>
 			</view>
-			<view v-if="user.avatarUrl" class="setting" @click="goSetting">
-				<text class="iconfont icon-shezhi"></text>
+			<view class="settingContainer">
+				<view class="funset" v-show="user.avatarUrl">
+					<view class="funitem exps">
+						<text>{{ user.exps }}</text>
+						<text>经验</text>
+					</view>
+					<view class="funitem subs">
+						<text>{{ user.subs }}</text>
+						<text>关注</text>
+					</view>
+					<view class="funitem loves">
+						<text>{{ user.loves }}</text>
+						<text>收藏</text>
+					</view>
+				</view>
+				<view class="editProfile" @click="goEditUserPage">编辑资料</view>
+				<view v-if="user.avatarUrl" class="setting" @click="goSetting">
+					<text class="iconfont icon-shezhi"></text>
+				</view>
 			</view>
 
-			<view class="funset" v-show="user.avatarUrl">
-				<view class="funitem exps">
-					<text>{{ user.exps }}</text>
-					<text>经验</text>
-				</view>
-				<view class="funitem subs">
-					<text>{{ user.subs }}</text>
-					<text>关注</text>
-				</view>
-				<view class="funitem loves">
-					<text>{{ user.loves }}</text>
-					<text>收藏</text>
-				</view>
-			</view>
 
 		</view>
 		<view class="servicecontainer">
@@ -47,7 +50,8 @@
 		goLogin,
 		goSetting,
 		goAdvice,
-		userinfo
+		userinfo,
+		goEditUserPage
 	} from './index.js'
 	import {
 		onMounted
@@ -106,33 +110,49 @@
 				}
 			}
 
-			.setting {
-				float: right;
-				margin-right: 20rpx;
-				// background-color: red;
-				width: 80rpx;
-				border: 1rpx solid black;
-				border-radius: 20rpx;
-
-				.iconfont {
-					font-size: 60rpx;
-					margin-left: 10rpx;
-				}
-			}
-
-			.funset {
+			.settingContainer {
 				display: flex;
-				font-size: 20rpx;
-				margin-left: 30rpx;
+				justify-content: right;
+				align-items: center;
 
-				.funitem {
+				.editProfile {
+					color: white;
+					padding: 10rpx 20rpx;
+					border-radius: 30rpx;
+					border: 1rpx solid white;
+					margin-right: 20rpx;
+				}
+
+				.setting {
+					float: right;
+					margin-right: 20rpx;
+					width: 80rpx;
+					border: 1rpx solid white;
+					border-radius: 20rpx;
+					color: white;
+
+					.iconfont {
+						font-size: 60rpx;
+						margin-left: 10rpx;
+					}
+				}
+
+				.funset {
+					flex-grow: 1;
 					display: flex;
-					flex-direction: column;
-					margin-right: 15rpx;
-					align-items: center;
+					font-size: 20rpx;
+					margin-left: 30rpx;
 
+					.funitem {
+						display: flex;
+						flex-direction: column;
+						margin-right: 15rpx;
+						align-items: center;
+
+					}
 				}
 			}
+
 		}
 
 		.servicecontainer {

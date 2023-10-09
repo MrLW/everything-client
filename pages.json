@@ -82,6 +82,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/personCenter/edit/edit",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "用户编辑",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
