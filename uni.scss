@@ -85,3 +85,11 @@ uni-page-body {
 page {
 	height: 100vh;
 }
+
+// 单行文本
+// 单行文本省略号固定写法
+.single-ellipsis {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}

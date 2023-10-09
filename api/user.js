@@ -43,6 +43,33 @@ export async function updateUser(openid, user) {
 		method: 'PATCH',
 		data: user
 	}))
+};
+
+/**
+ *  更新用户头像
+ * @param {Object} avatarBase64 头像的Base64
+ */
+export async function updateAvatarUrl(avatarBase64) {
+	return request(({
+		url: "/user/updateAvatarUrl",
+		method: 'POST',
+		data: {
+			avatar: avatarBase64
+		}
+	}))
+}
+/**
+ *  更新用户信息
+ * @param {Object} codes 省市区的编码
+ */
+export async function updateArea(codes) {
+	return request(({
+		url: "/user/updateArea",
+		method: 'POST',
+		data: {
+			codes: codes
+		}
+	}))
 }
 
 // 绑定手机号
@@ -63,25 +90,5 @@ export async function resetPassword(password) {
 		data: {
 			password
 		}
-	})
-}
-
-// 上传头像
-export async function uploadPortrait(portraitPath) {
-	let url = `${env.baseUrl}/account/uploadPortrait`;
-	const token = uni.getStorageSync("token")
-	uni.uploadFile({
-		url: url,
-		filePath: portraitPath,
-		name: 'file',
-		header: {
-			"Authorization": token
-		},
-		success(res) {
-			console.info("上传文件:", res)
-		},
-		fail(err, b) {
-			console.error(err, b)
-		},
 	})
 }

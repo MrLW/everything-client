@@ -2,7 +2,11 @@ import {
 	reactive,
 	ref,
 } from 'vue'
+import {
+	getAreaInfo
+} from '../../api/area';
 export const title = ref("Everhthing");
+export const provinceList = reactive([])
 // 功能模块
 export const modules = reactive([{
 		id: 3,
@@ -27,6 +31,7 @@ export const modules = reactive([{
 	},
 ])
 
+
 export const goPage = function(moduleItem) {
 	uni.navigateTo({
 		url: moduleItem.path
@@ -34,4 +39,10 @@ export const goPage = function(moduleItem) {
 		title: "开发中",
 		icon: 'none'
 	}))
+}
+
+export function getAllArea() {
+	getAreaInfo().then(res => {
+		provinceList.splice(0, provinceList.length, ...res)
+	})
 }

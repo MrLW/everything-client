@@ -41,23 +41,11 @@
 	import {
 		createRecordDayLoveMoment
 	} from '../../../api/recordDay';
+	import {
+		base64
+	} from '../../../utils';
 
 
-	function base64(url, type) {
-		return new Promise((resolve, reject) => {
-			uni.request({
-				url: url,
-				method: "GET",
-				responseType: "arraybuffer",
-				success: (ress) => {
-					let base64 = wx.arrayBufferToBase64(ress.data); //把arraybuffer转成base64
-					base64 = "data:image/jpeg;base64," + base64; //不加上这串字符，在页面无法显示的哦
-					resolve(base64);
-				},
-				fail: (res) => reject(res.errMsg),
-			});
-		});
-	}
 
 	const moment = reactive({
 		title: '',
