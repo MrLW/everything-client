@@ -40,8 +40,13 @@ export const goPage = function(moduleItem) {
 		icon: 'none'
 	}))
 }
-
+/**
+ *  获取china所有的省市区
+ */
 export function getAllArea() {
+	if (provinceList.length != 0) {
+		return;
+	}
 	getAreaInfo().then(res => {
 		provinceList.splice(0, provinceList.length, ...res)
 	})

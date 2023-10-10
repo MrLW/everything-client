@@ -91,6 +91,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/personCenter/edit/editDesc/editDesc",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "编辑简介",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/personCenter/edit/editName/editName",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "编辑名字",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

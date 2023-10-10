@@ -59,7 +59,7 @@ export async function updateAvatarUrl(avatarBase64) {
 	}))
 }
 /**
- *  更新用户信息
+ *  更新用户地区
  * @param {Object} codes 省市区的编码
  */
 export async function updateArea(codes) {
@@ -72,23 +72,30 @@ export async function updateArea(codes) {
 	}))
 }
 
-// 绑定手机号
-export async function bindPhone(phone) {
+/**
+ * 更新用户简介
+ * @param {Object} desc 
+ */
+export async function updateDesc(desc) {
 	return request({
-		url: "/account/bindPhone",
-		method: 'PUT',
+		url: "/user/updateDesc",
+		method: 'POST',
 		data: {
-			phone
+			desc
 		}
 	})
 }
-// 重置密码
-export async function resetPassword(password) {
+
+/**
+ * 更新用户名称
+ * @param {Object} username
+ */
+export async function updateUsername(username) {
 	return request({
-		url: "/account/resetPassword",
-		method: 'PUT',
+		url: "/user/updateUsername",
+		method: 'POST',
 		data: {
-			password
+			username
 		}
 	})
 }

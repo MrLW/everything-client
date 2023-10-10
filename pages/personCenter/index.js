@@ -23,7 +23,8 @@ export const user = ref({
 	exps: 0,
 	subs: 0,
 	loves: 0,
-	district: ''
+	district: '',
+	desc: ''
 })
 /**
  *  微信授权登录

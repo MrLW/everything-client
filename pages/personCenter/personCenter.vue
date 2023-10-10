@@ -6,7 +6,10 @@
 					<view v-if="!user.avatarUrl" class="iconfont icon-morentouxiang1 chooseAvatar"></view>
 					<image v-else mode="aspectFit" :src="user.avatarUrl"></image>
 				</view>
-				<view class="username">{{ user.username }}</view>
+				<view class="info">
+					<text class="username">{{ user.username }}</text>
+					<!-- <text class="address">上海</text> -->
+				</view>
 			</view>
 			<view class="settingContainer">
 				<view class="funset" v-show="user.avatarUrl">
@@ -56,8 +59,12 @@
 	import {
 		onMounted
 	} from 'vue'
+	import {
+		getAllArea
+	} from '../index/index.js';
 	onMounted(function() {
 		userinfo()
+		getAllArea()
 	})
 </script>
 
@@ -108,6 +115,26 @@
 					height: 120rpx;
 					border-radius: 50%;
 				}
+
+				.info {
+					height: 120rpx;
+					display: flex;
+					flex-direction: column;
+					justify-content: space-around;
+
+					.username {
+						font-size: 35rpx;
+						color: white;
+						font-weight: bold;
+						color: rgba(255, 255, 255, .8);
+					}
+
+					.address {
+						font-size: 18rpx;
+						color: rgba(255, 255, 255, .8);
+					}
+				}
+
 			}
 
 			.settingContainer {
