@@ -12,6 +12,6 @@ export const mensesList = reactive([])
 
 export const getAllMenses = () => {
 	getMensesList().then(data => {
-		mensesList.splice(0, 0, ...data);
+		mensesList.splice(0, mensesList.length, ...data);
 	})
 }
