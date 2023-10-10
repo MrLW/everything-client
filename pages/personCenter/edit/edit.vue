@@ -9,14 +9,14 @@
 		<view class="userinfo">
 			<view class="useritem">
 				<view class="label">姓名</view>
-				<view>{{ user.username }}</view>
-				<text class="iconfont icon-xiangyoujiantou1"></text>
+				<view @click="showEditUsernamePage">{{ user.username }}</view>
+				<text class="iconfont icon-xiangyoujiantou1" @click="showEditUsernamePage"></text>
 			</view>
 			<view class="useritem">
 				<view class="label">简介</view>
 				<!-- single-ellipsis -->
-				<view class="desc single-ellipsis">这是我的简介，谁也别谁也别谁也别谁也别谁也别谁也别谁也别谁也别谁也别</view>
-				<text class="iconfont icon-xiangyoujiantou1"></text>
+				<view class="desc single-ellipsis" @click="showEditDescPage">{{ user.desc }}</view>
+				<text class="iconfont icon-xiangyoujiantou1" @click="showEditDescPage"></text>
 			</view>
 			<view class="useritem">
 				<view class="label">地区</view>
@@ -26,11 +26,11 @@
 				</view>
 				<text class="iconfont icon-xiangyoujiantou1"></text>
 			</view>
-			<view class="useritem">
+			<!-- <view class="useritem">
 				<view class="label">背景图</view>
 				<view>上传背景图</view>
 				<text class="iconfont icon-xiangyoujiantou1"></text>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -48,6 +48,10 @@
 		chooseAvatarUrl,
 		updateUserArea,
 	} from '../index.js'
+	import {
+		showEditDescPage,
+		showEditUsernamePage
+	} from '.'
 	const onchange = (e) => {
 		updateUserArea(e.detail.value.map(item => item.value))
 	}
