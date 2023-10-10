@@ -109,6 +109,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/marryDetail/chat/chat",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "聊天",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
