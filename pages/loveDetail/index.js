@@ -53,7 +53,13 @@ export const getNewMomentList = async () => {
 /**
  *  点赞
  */
-export const love = (id, event) => {
+export const love = id => {
+	if (id == currentMoment.value.id) {
+		let incre = currentMoment.value.loved ? -1 : 1;
+		currentMoment.value.loves += incre;
+		currentMoment.value.loved = !currentMoment.value.loved;
+		user.value.loves += incre;
+	}
 	const cur = momentList.find(moment => moment.id == id);
 	let incre = cur.loved ? -1 : 1;
 	cur.loves += incre;
