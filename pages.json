@@ -72,53 +72,50 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/personCenter/setting/setting",
+			"style": {
+				"navigationBarTitleText": "设置",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/personCenter/edit/edit",
+			"style": {
+				"navigationBarTitleText": "用户编辑",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/personCenter/edit/editDesc/editDesc",
+			"style": {
+				"navigationBarTitleText": "编辑简介",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/personCenter/edit/editName/editName",
+			"style": {
+				"navigationBarTitleText": "编辑名字",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/marryDetail/chat/chat",
+			"style": {
+				"navigationBarTitleText": "聊天",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/personCenter/edit/editEid/editEid",
+			"style": {
+				"navigationBarTitleText": "编辑EID",
+				"enablePullDownRefresh": false
+			}
+
 		}
-	    ,{
-            "path" : "pages/personCenter/setting/setting",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "设置",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/personCenter/edit/edit",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "用户编辑",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/personCenter/edit/editDesc/editDesc",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "编辑简介",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/personCenter/edit/editName/editName",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "编辑名字",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/marryDetail/chat/chat",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "聊天",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

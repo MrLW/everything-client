@@ -13,6 +13,20 @@
 				<text class="iconfont icon-xiangyoujiantou1" @click="showEditUsernamePage"></text>
 			</view>
 			<view class="useritem">
+				<view class="label">EID</view>
+				<view @click="showEditEidPage">{{ user.eid }}</view>
+				<text class="iconfont icon-xiangyoujiantou1" @click="showEditEidPage"></text>
+			</view>
+			<view class="useritem">
+				<view class="label">性别</view>
+				<view>
+					<picker :range="sexList" @change="updateUserSex">
+						<view class="uni-input">{{ sexList[user.sex]  }}</view>
+					</picker>
+				</view>
+				<text class="iconfont icon-xiangyoujiantou1"></text>
+			</view>
+			<view class="useritem">
 				<view class="label">简介</view>
 				<!-- single-ellipsis -->
 				<view class="desc single-ellipsis" @click="showEditDescPage">{{ user.desc }}</view>
@@ -50,11 +64,12 @@
 	} from '../index.js'
 	import {
 		showEditDescPage,
-		showEditUsernamePage
+		showEditUsernamePage,
+		showEditEidPage,
+		sexList,
+		updateUserSex,
 	} from '.'
-	const onchange = (e) => {
-		updateUserArea(e.detail.value.map(item => item.value))
-	}
+
 	const onnodeclick = () => {}
 </script>
 
