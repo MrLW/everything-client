@@ -24,7 +24,9 @@ export const user = ref({
 	subs: 0,
 	loves: 0,
 	district: '',
-	desc: ''
+	desc: '',
+	eid: '',
+	sex: 0,
 })
 /**
  *  微信授权登录

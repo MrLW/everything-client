@@ -99,3 +99,31 @@ export async function updateUsername(username) {
 		}
 	})
 }
+
+/**
+ * 更新用户eid
+ * @param {Object} eid
+ */
+export async function updateEid(eid) {
+	return request({
+		url: "/user/updateEid",
+		method: 'POST',
+		data: {
+			eid
+		}
+	})
+}
+
+/**
+ * 更新用户sex
+ * @param {Object} sex
+ */
+export async function updateSex(sex) {
+	return request({
+		url: "/user/updateSex",
+		method: 'POST',
+		data: {
+			sex
+		}
+	})
+}

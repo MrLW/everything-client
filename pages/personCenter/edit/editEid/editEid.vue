@@ -1,16 +1,15 @@
 <template>
 	<view class="container">
-		<input class="username" type="text" name="username" v-model="user.username" placeholder="最长10个字符"
-			maxlength="10">
+		<input class="eid" type="text" name="eid" placeholder="最长16个字符" maxlength="16" v-model="user.eid">
 		<view class="menuBtn">
-			<view class="confirm" @click="saveUsername()">保存</view>
+			<view class="confirm" @click="saveEid">保存</view>
 		</view>
 	</view>
 </template>
 
 <script setup>
 	import {
-		saveUsername
+		saveEid
 	} from '.';
 	import {
 		user
@@ -38,7 +37,7 @@
 			}
 		}
 
-		.username {
+		.eid {
 			background-color: white;
 			margin: 0 40rpx;
 			margin-top: 20rpx;
