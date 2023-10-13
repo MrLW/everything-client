@@ -1,7 +1,23 @@
 <template>
-	<view>
+
+	<view class="container">
+		<view class="eidSend">
+			<input class="eid" type="text" placeholder="请输入您伴侣的EID" v-model="marry.receEid">
+			<button class="btn" @click="createMarryApply">发送</button>
+		</view>
+		<view class="avatarList">
+			<image src="../../static/logo.png" mode=""></image>
+			<view class="connect">
+				<view>{{ statusText }}</view>
+			</view>
+			<image :src="marry.avatarUrl" mode="" @click="goChatPage"></image>
+		</view>
+	</view>
+
+
+	<view style="display: none;">
 		<view class="chatItem" @click="goChatPage">
-			<image class="avatar" src="../../static/logo.png"></image>
+			<image class="avatar" src=""></image>
 			<view class="userinfo">
 				<view class="username">lw</view>
 				<view class="chatContent">怎么没回复我消息</view>
@@ -12,11 +28,66 @@
 
 <script setup>
 	import {
-		goChatPage
+		statusText,
+		marry,
+		goChatPage,
+		getMarryInfo,
+		createMarryApply
 	} from '.';
+
+	getMarryInfo()
 </script>
 
 <style lang="scss">
+	.container {
+		background-color: f6f6f6;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+
+		.eidSend {
+			margin-top: 20rpx;
+			display: flex;
+			padding: 10rpx;
+
+			.btn {
+				text-align: center;
+				display: flex;
+				align-items: center;
+			}
+
+			.eid {
+				height: 100rpx;
+				border-radius: 20rpx;
+				flex: 1;
+				border: 1rpx solid darkgrey;
+				padding: 5rpx 20rpx;
+				margin-right: 10rpx;
+			}
+		}
+
+		.avatarList {
+			margin-top: 200rpx;
+			display: flex;
+			justify-content: space-evenly;
+			width: 100%;
+
+			.connect {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+
+			image {
+				width: 150rpx;
+				height: 150rpx;
+				border-radius: 50%;
+			}
+		}
+	}
+
+
 	.chatItem {
 		width: 100%;
 		height: 150rpx;

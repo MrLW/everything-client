@@ -37,6 +37,10 @@
 		<view class="servicecontainer">
 			<view class="tip">我的服务</view>
 			<view class="serviceList">
+				<view class="serviceItem" @click="goMessagePage">
+					<view class="iconfont icon-xiaoxi"></view>
+					<text class="serviceName">我的消息</text>
+				</view>
 				<view class="serviceItem" @click="goAdvice">
 					<view class="iconfont icon-jianyi"></view>
 					<text class="serviceName">我的建议</text>
@@ -54,7 +58,8 @@
 		goSetting,
 		goAdvice,
 		userinfo,
-		goEditUserPage
+		goEditUserPage,
+		goMessagePage
 	} from './index.js'
 	import {
 		onMounted

@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4256690 */
-  src: url('http://at.alicdn.com/t/c/font_4256690_0zc6d14xcab.woff2?t=1696920551082') format('woff2'),
-       url('http://at.alicdn.com/t/c/font_4256690_0zc6d14xcab.woff?t=1696920551082') format('woff'),
-       url('http://at.alicdn.com/t/c/font_4256690_0zc6d14xcab.ttf?t=1696920551082') format('truetype');
+  src: url('https://at.alicdn.com/t/c/font_4256690_lyttnnk1pol.woff2?t=1697186561764') format('woff2'),
+       url('https://at.alicdn.com/t/c/font_4256690_lyttnnk1pol.woff?t=1697186561764') format('woff'),
+       url('https://at.alicdn.com/t/c/font_4256690_lyttnnk1pol.ttf?t=1697186561764') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-xiaoxi:before {
+  content: "\e711";
+}
+
+.icon-morentouxiang2:before {
+  content: "\e677";
 }
 
 .icon-fasongxiaoxi:before {

@@ -166,3 +166,9 @@ export function updateUserArea(e) {
 		user.value.district = codes[2]
 	})
 }
+
+export function goMessagePage() {
+	uni.navigateTo({
+		url: "/pages/personCenter/message/message",
+	})
+}
