@@ -127,3 +127,27 @@ export async function updateSex(sex) {
 		}
 	})
 }
+
+/**
+ *  获取当前伴侣的信息
+ */
+export async function marryInfo() {
+	return request({
+		url: "/user/marry/info",
+		method: 'GET',
+	})
+}
+
+/**
+ * 发送结婚申请
+ * @param {Object} receId
+ */
+export async function marryApply(receEid) {
+	return request({
+		url: "/user/marry/apply",
+		method: 'POST',
+		data: {
+			receEid
+		}
+	})
+}

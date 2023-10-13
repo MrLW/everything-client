@@ -83,3 +83,10 @@ export function base64(url, type) {
 		});
 	});
 }
+
+export function toast(title) {
+	uni.showToast({
+		icon: 'none',
+		title
+	})
+}
