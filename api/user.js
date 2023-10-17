@@ -151,3 +151,11 @@ export async function marryApply(receEid) {
 		}
 	})
 }
+
+export async function sendMessage(message) {
+	return request({
+		url: "/user/chat",
+		method: 'POST',
+		data: message
+	})
+}

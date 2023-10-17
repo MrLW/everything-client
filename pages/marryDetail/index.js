@@ -1,4 +1,5 @@
 import {
+	computed,
 	ref
 } from 'vue'
 import {
@@ -8,11 +9,6 @@ import {
 import {
 	toast
 } from '../../utils';
-export const statusText = ref('');
-const statusMap = {
-	success: '建立连接成功~',
-	apply: '已发送申请,请等候对方同意~',
-}
 
 export const marry = ref({
 	status: 'apply',
@@ -21,13 +17,14 @@ export const marry = ref({
 	receEid: ''
 })
 
+export const receId = ref(0);
+
 /**
  *  获取伴侣信息
  */
 export async function getMarryInfo() {
 	let res = await marryInfo()
-	marry.value = res;
-	statusText.value = statusMap[res.status] || '未发送申请';
+	marry.value = res || {};
 }
 
 export function goChatPage() {
@@ -43,13 +40,27 @@ export function goChatPage() {
 /**
  *  发送恋爱申请
  */
-export function createMarryApply() {
-	// console.log("#######", marry)
+export async function createMarryApply() {
 	if (!marry.value.receEid || marry.value.receEid.trim() == '') {
 		return uni.showToast({
 			icon: 'none',
 			title: '伴侣的EID不能为空'
 		})
 	}
-	return marryApply(marry.value.receEid);
+	const res = await marryApply(marry.value.receEid);
+	marry.value = res;
+	console.log("###########", marry.value)
 }
+
+export const statusText = computed(() => {
+	console.log("~~~~~~~~~~~~~~~~11~~~~");
+	if (!marry.value.status) {
+		return '未发送申请';
+	}
+	if (marry.value.status == 'apply') {
+		return '已发送申请,请等候对方同意~'
+	}
+	if (marry.value.status == 'success') {
+		return '建立连接成功~'
+	}
+})
