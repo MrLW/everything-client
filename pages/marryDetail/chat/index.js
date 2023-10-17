@@ -1,6 +1,9 @@
 import {
 	ref
 } from 'vue'
+import {
+	sendMessage
+} from '../../../api/user';
 export const chatItemList = ref([{
 	id: 1,
 	avatarUrl: 'http://192.168.20.221:3000/avatar/1696902854857.jpg',
@@ -19,8 +22,6 @@ export const content = ref('')
 
 
 export function addChatItem() {
-
-	console.log("####addChatItem");
 	if (content.value == '') return;
 	chatItemList.value.push({
 		id: chatItemList.value.length + 1,
@@ -30,4 +31,10 @@ export function addChatItem() {
 		userId: 1
 	})
 	content.value = '';
+	// 
+
+	sendMessage({
+		recvId: 1,
+		content: content.value,
+	})
 }
