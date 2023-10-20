@@ -6,6 +6,9 @@ import {
 import {
 	ref
 } from 'vue'
+import {
+	friendId
+} from '../../marryDetail/chat/index.js'
 
 export const messageList = ref([])
 
@@ -15,10 +18,15 @@ export const getMessageList = () => {
 	})
 }
 
-export const agree = (id, status) => {
+export const agree = (message) => {
+	const {
+		id,
+		status,
+		sender
+	} = message;
 	if (status == 'complete') {
 		uni.navigateTo({
-			url: "/pages/marryDetail/chat/chat"
+			url: "/pages/marryDetail/chat/chat?friendId=" + sender.id
 		})
 	} else {
 		updateMessage(id).then(() => {

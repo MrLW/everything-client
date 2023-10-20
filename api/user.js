@@ -123,7 +123,7 @@ export async function updateSex(sex) {
 		url: "/user/updateSex",
 		method: 'POST',
 		data: {
-			sex
+			sex: ~~sex
 		}
 	})
 }
@@ -151,11 +151,55 @@ export async function marryApply(receEid) {
 		}
 	})
 }
-
-export async function sendMessage(message) {
+/**
+ * 发送聊天消息
+ * @param {Object} message
+ */
+export async function sendChatMessage(message) {
 	return request({
 		url: "/user/chat",
 		method: 'POST',
 		data: message
+	})
+}
+/**
+ * 发送邮箱验证码
+ * @param {Object} email 邮箱
+ */
+export async function sendEmailCode(email) {
+	return request({
+		url: "/user/email/code",
+		method: 'POST',
+		data: {
+			email
+		}
+	})
+}
+/**
+ * 邮箱验证码登录
+ * @param {Object} email 邮箱
+ * @param {Object} code 验证码
+ */
+export async function verifyEmailCode(email, code) {
+	return request({
+		url: "/user/email/verify",
+		method: 'POST',
+		data: {
+			email,
+			code
+		}
+	})
+}
+/**
+ *  获取好友的聊天记录
+ * @param {Object} friendId 好友id
+ */
+export function chatList(friendId) {
+	return request({
+		url: "/user/chat",
+		method: 'GET',
+		data: {
+			friendId
+		}
 	})
 }

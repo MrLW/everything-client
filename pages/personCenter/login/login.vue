@@ -1,24 +1,22 @@
 <template>
 	<view class="container">
-		<view class="icon">Everything</view>
-		<view class="btnList">
-			<image v-if="user.avatarUrl" class="avatarUrl" :src="user.avatarUrl" mode=""></image>
-			<view v-else class="btnControll">
-				<view class="iconfont icon-morentouxiang1">
-				</view>
-				<button class="chooseAvatar" open-type="chooseAvatar" @chooseavatar="chooseavatar" />
-			</view>
-			<input class="nickname" type="nickname" placeholder="输入你的昵称" lable="昵称" @blur="submitNickname"
-				v-model="user.username">
+		<view class="emailView">
+			<input class="email" type="text" placeholder="请输入您的邮箱" v-model="email">
+			<lee-countdown :sendCode="sendEmail" :a="1"></lee-countdown>
 		</view>
+		<view class="verifyView">
+			<input class="code" type="text" placeholder="请输入您的验证码" maxlength="4" v-model="code">
+		</view>
+		<button class="verify" @click="verifyCode">验证</button>
 	</view>
 </template>
 <script setup>
 	import {
-		user,
-		chooseavatar,
-		submitNickname
-	} from '../index.js'
+		email,
+		code,
+		sendEmail,
+		verifyCode
+	} from './index.js';
 </script>
 <style lang="scss">
 	.container {
@@ -26,11 +24,37 @@
 		display: flex;
 		flex-direction: column;
 
-		.icon {
-			height: 300rpx;
-			text-align: center;
-			line-height: 300rpx;
-			color: darkgrey;
+		.emailView {
+			margin-top: 300rpx;
+			display: flex;
+
+			.email {
+				height: 60rpx;
+				padding: 10rpx 30rpx;
+				font-size: 40rpx;
+				margin: 0 10rpx;
+				border-radius: 10rpx;
+				width: 70%;
+				border: 1rpx solid darkgrey;
+			}
+
+
+		}
+
+		.verifyView {
+			.code {
+				height: 60rpx;
+				padding: 10rpx 30rpx;
+				font-size: 40rpx;
+				margin: 0 10rpx;
+				border-radius: 10rpx;
+				width: 70%;
+				border: 1rpx solid darkgrey;
+			}
+		}
+
+		.verify {
+			margin: 20rpx 10rpx;
 		}
 
 		.btnList {

@@ -8,11 +8,10 @@
 				</view>
 				<view class="info">
 					<text class="username">{{ user.username }}</text>
-					<!-- <text class="address">上海</text> -->
 				</view>
 			</view>
 			<view class="settingContainer">
-				<view class="funset" v-show="user.avatarUrl">
+				<view class="funset" v-show="user.id">
 					<view class="funitem exps">
 						<text>{{ user.exps }}</text>
 						<text>经验</text>
@@ -26,8 +25,8 @@
 						<text>收藏</text>
 					</view>
 				</view>
-				<view class="editProfile" @click="goEditUserPage">编辑资料</view>
-				<view v-if="user.avatarUrl" class="setting" @click="goSetting">
+				<view v-if="user.eid" class="editProfile" @click="goEditUserPage">编辑资料</view>
+				<view v-if="user.eid" class="setting" @click="goSetting">
 					<text class="iconfont icon-shezhi"></text>
 				</view>
 			</view>
@@ -62,15 +61,22 @@
 		goMessagePage
 	} from './index.js'
 	import {
-		onMounted
+		onMounted,
+		onUpdated,
 	} from 'vue'
 	import {
 		getAllArea
 	} from '../index/index.js';
-	onMounted(function() {
-		userinfo()
-		getAllArea()
-	})
+	import {
+		SOCKET_EVENT_NAME
+	} from '../../utils/constant.js';
+
+	import '../../socket/index.js'
+
+
+
+	userinfo()
+	getAllArea()
 </script>
 
 <style lang="scss">

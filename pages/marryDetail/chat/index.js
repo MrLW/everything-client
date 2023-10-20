@@ -2,7 +2,8 @@ import {
 	ref
 } from 'vue'
 import {
-	sendMessage
+	chatList,
+	sendChatMessage
 } from '../../../api/user';
 export const chatItemList = ref([{
 	id: 1,
@@ -19,22 +20,22 @@ export const chatItemList = ref([{
 }])
 
 export const content = ref('')
+export const friendId = ref(0);
 
 
 export function addChatItem() {
 	if (content.value == '') return;
-	chatItemList.value.push({
-		id: chatItemList.value.length + 1,
+	sendChatMessage({
+		receId: friendId.value,
 		content: content.value,
-		isMe: true,
-		avatarUrl: 'http://192.168.20.221:3000/avatar/1696902854857.jpg',
-		userId: 1
 	})
 	content.value = '';
-	// 
+}
 
-	sendMessage({
-		recvId: 1,
-		content: content.value,
+export function getChatList(fId) {
+	friendId.value = ~~fId;
+	chatList(fId).then(res => {
+		chatItemList.value = res;
+		console.log("####res:", res)
 	})
 }
