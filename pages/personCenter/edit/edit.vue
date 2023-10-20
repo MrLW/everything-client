@@ -126,6 +126,7 @@
 
 				.desc {
 					width: 400rpx;
+					text-align: right;
 				}
 
 				padding: 36rpx 0;

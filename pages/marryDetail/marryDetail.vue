@@ -6,11 +6,11 @@
 			<button class="btn" @click="createMarryApply">发送</button>
 		</view>
 		<view class="avatarList">
-			<image src="../../static/logo.png" mode=""></image>
+			<image :src="user.avatarUrl" mode=""></image>
 			<view class="connect">
 				<view>{{ statusText }}</view>
 			</view>
-			<image :src="marry.avatarUrl" mode="" @click="goChatPage"></image>
+			<image :src="marry.avatarUrl" mode="" @click="goChatPage(marry.id)"></image>
 		</view>
 	</view>
 
@@ -34,7 +34,10 @@
 		getMarryInfo,
 		createMarryApply
 	} from '.';
-
+	import env from '../../utils/env';
+	import {
+		user
+	} from '../personCenter';
 	getMarryInfo()
 </script>
 

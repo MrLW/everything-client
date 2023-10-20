@@ -53,9 +53,11 @@
 		"appid": "wx270b5422e3624c88",
 		"setting": {
 			"urlCheck": false,
-			"es6": true
+			"es6": true,
+			"minified": true
 		},
-		"usingComponents": true
+		"usingComponents": true,
+		"lazyCodeLoading": "requiredComponents"
 	},
 	"mp-alipay": {
 		"usingComponents": true

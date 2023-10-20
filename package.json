@@ -9,7 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "@hyoga/uni-socket.io": "^3.0.4"
+  },
   "devDependencies": {
     "@vant/auto-import-resolver": "^1.0.1",
     "unplugin-vue-components": "^0.25.2"

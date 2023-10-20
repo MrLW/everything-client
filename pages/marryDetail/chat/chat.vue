@@ -2,7 +2,7 @@
 	<view class="contaienr">
 		<scroll-view class="chatList" scroll-y>
 			<view class="chatItem" v-for="(item,index) in chatItemList" :key="item.id" :class="{isMe: item.isMe}">
-				<image :src="item.avatarUrl"></image>
+				<image :src="item.isMe ? item.avatarUrl : item.avatarUrl"></image>
 				<view class="content">{{ item.content }}</view>
 			</view>
 		</scroll-view>
@@ -20,8 +20,11 @@
 	import {
 		content,
 		chatItemList,
-		addChatItem
+		addChatItem,
+		getChatList
 	} from '.'
+	const props = defineProps(['friendId'])
+	getChatList(props.friendId)
 </script>
 
 <style lang="scss">

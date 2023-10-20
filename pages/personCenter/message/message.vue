@@ -1,20 +1,22 @@
 <template>
 	<view class="container">
-		<view class="messageList">
+		<view class="messageList" v-show="messageList.length != 0">
 			<view class="messageItem" v-for="item in messageList">
 				<view class="avatarUrl">
-					<image :src="item.et_user.avatarUrl" mode=""></image>
+					<image :src="item.sender.avatarUrl" mode=""></image>
 				</view>
 				<view class="info">
 					<view class="username">{{ item.title}}</view>
 					<view class="tip">{{ item.content}}</view>
 				</view>
 
-				<view class="agree" :class="[item.status == 'complete' ? 'black': 'red' ]"
-					@click="agree(item.id, item.status)">
+				<view class="agree" :class="[item.status == 'complete' ? 'black': 'red' ]" @click="agree(item)">
 					{{ item.status == 'complete' ? '去聊天' : '同意'}}
 				</view>
 			</view>
+		</view>
+		<view class="nodata" v-show="messageList.length == 0">
+			<text class="iconfont icon-meiyoushuju"></text>
 		</view>
 	</view>
 </template>
@@ -87,6 +89,18 @@
 					color: black;
 				}
 			}
+		}
+
+		.nodata {
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			.iconfont {
+				font-size: 100rpx;
+			}
+
 		}
 	}
 </style>

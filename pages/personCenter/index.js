@@ -62,13 +62,15 @@ export const login = async () => {
  */
 export const userinfo = async () => {
 	const res = await info();
-	user.value = res;
+	user.value = res || {};
 }
 
 /**
  *  跳转到登录页面
  */
 export const goLogin = () => {
+	console.info(user.value)
+	if (user.value.eid) return;
 	uni.navigateTo({
 		url: "/pages/personCenter/login/login",
 	})

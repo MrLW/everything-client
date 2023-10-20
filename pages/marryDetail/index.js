@@ -11,9 +11,9 @@ import {
 } from '../../utils';
 
 export const marry = ref({
+	id: 0,
 	status: 'apply',
 	avatarUrl: '',
-	otherId: 0,
 	receEid: ''
 })
 
@@ -27,13 +27,13 @@ export async function getMarryInfo() {
 	marry.value = res || {};
 }
 
-export function goChatPage() {
+export function goChatPage(friendId) {
 	if (marry.value.status != 'success') {
 		return toast("您的伴侣还未建立成功");
 	}
 
 	uni.navigateTo({
-		url: "/pages/marryDetail/chat/chat"
+		url: "/pages/marryDetail/chat/chat?friendId=" + friendId
 	})
 }
 
@@ -53,7 +53,6 @@ export async function createMarryApply() {
 }
 
 export const statusText = computed(() => {
-	console.log("~~~~~~~~~~~~~~~~11~~~~");
 	if (!marry.value.status) {
 		return '未发送申请';
 	}
