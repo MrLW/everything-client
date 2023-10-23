@@ -5,7 +5,7 @@
 				<image :src="item.avatarUrl" class="avatarUrl"></image>
 				<view class="time">
 					<text class="startTime">{{ item.startTime}}</text>
-					<text class="diffDays">距离上次来姨妈有{{ item.diffDays }}天啦~</text>
+					<text class="diffDays"> {{item.diffDays ? "距离上次来姨妈有" + item.diffDays + "天啦": "您的第一次记录姨妈"}} ~</text>
 				</view>
 			</view>
 		</view>

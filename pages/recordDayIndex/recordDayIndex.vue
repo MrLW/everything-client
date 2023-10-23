@@ -11,7 +11,7 @@
 					<text>{{ event.name }}</text>
 					<view class="detail">
 						<text>{{ event.type == 'menses' ? '最近' : '始于' }} {{ event.startTime }}, </text>
-						<text>距近已有{{ event.diffDays }}天啦！</text>
+						<text>距今已有{{ event.diffDays }}天啦！</text>
 					</view>
 				</view>
 			</view>
@@ -30,10 +30,6 @@
 					</uni-forms-item>
 					<uni-forms-item label="老婆" class="formItem" v-if="eventItem.type == 'marry'" name="wife" required>
 						<uni-easyinput placeholder="最多4个字" v-model="eventItem.wife" maxlength="4" :clearable="false" />
-					</uni-forms-item>
-					<uni-forms-item label="姓名" class="formItem" name="username" required>
-						<uni-easyinput placeholder="最多4个字" v-model="eventItem.username" maxlength="4"
-							:clearable="false" />
 					</uni-forms-item>
 					<uni-forms-item label="男友" class="formItem" v-if="eventItem.type == 'love'" name="bf" required>
 						<uni-easyinput placeholder="最多4个字" v-model="eventItem.bf" maxlength="4" :clearable="false" />
@@ -176,10 +172,12 @@
 				this.eventItem.startTime = null;
 			},
 			async submit() {
+				console.log("#submit:", this.$refs)
 				this.$refs.form.validate().then(async data => {
 					const item = JSON.parse(JSON.stringify(this.eventItem))
 					const menses = this.eventList.find(item => item.type == 'menses');
-					if (diffDays(menses.startTime, item.startTime) <= 15) {
+					if (item.type == 'menses' && menses && diffDays(menses.startTime, item.startTime) <=
+						15) {
 						return uni.showToast({
 							icon: 'none',
 							title: '距离您上次来姨妈不超过15天~',
