@@ -172,7 +172,6 @@
 				this.eventItem.startTime = null;
 			},
 			async submit() {
-				console.log("#submit:", this.$refs)
 				this.$refs.form.validate().then(async data => {
 					const item = JSON.parse(JSON.stringify(this.eventItem))
 					const menses = this.eventList.find(item => item.type == 'menses');

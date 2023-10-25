@@ -203,3 +203,17 @@ export function chatList(friendId) {
 		}
 	})
 }
+/**
+ *  搜索用户
+ * @param {Object} keyword eid
+ */
+export function searchUsers(keyword) {
+	console.log("#keyword: ", keyword)
+	return request({
+		url: "/user/search",
+		method: 'GET',
+		data: {
+			keyword
+		}
+	})
+}

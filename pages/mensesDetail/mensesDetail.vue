@@ -9,18 +9,53 @@
 				</view>
 			</view>
 		</view>
-
+		<uni-popup ref="popup">
+			<view class="popup-content">
+				<uni-forms ref="form" :rules="rules" :modelValue="eventItem">
+					<uni-forms-item label="时间" required class="formItem" name="startTime">
+						<uni-datetime-picker type="date" return-type="string" v-model="eventItem.startTime" />
+					</uni-forms-item>
+					<uni-forms-item label="备注" class="formItem" name="remark">
+						<uni-easyinput placeholder="最多10个字" v-model="eventItem.remark" maxlength="10"
+							:clearable="false" />
+					</uni-forms-item>
+					<view class="btn">
+						<button type="default" size="mini" @click="submit(form)">提交</button>
+						<button type="default" size="mini" @click="reset">重置</button>
+					</view>
+				</uni-forms>
+			</view>
+		</uni-popup>
+		<!-- 悬浮按钮 -->
+		<uni-fab ref="fab" :pattern="FAB_PATTERN" horizontal="right" @fabClick="showModePage('center')"></uni-fab>
 	</view>
 </template>
 
 <script setup>
+	import {
+		ref
+	} from 'vue'
+	import {
+		FAB_PATTERN
+	} from '../../utils/constant.js';
 	import {
 		user
 	} from '../personCenter/index.js'
 	import {
 		getAllMenses,
 		mensesList,
+		submit,
+		rules,
+		reset,
+		eventItem
 	} from './index'
+	const popup = ref();
+	const form = ref();
+
+	function showModePage(type) {
+		console.log("#popup:", popup)
+		popup.value.open(type);
+	}
 	getAllMenses()
 </script>
 
@@ -63,6 +98,28 @@
 					}
 				}
 
+			}
+		}
+
+		.popup-content {
+			background-color: white;
+			margin: 0 auto;
+			padding: 14rpx;
+			border-radius: 10rpx;
+
+			.formItem {
+				border-bottom: 1rpx solid;
+				padding-bottom: 10rpx;
+			}
+
+			.btn {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+
+				button {
+					background-color: #f16c61;
+				}
 			}
 		}
 	}

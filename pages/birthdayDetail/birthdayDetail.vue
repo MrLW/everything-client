@@ -1,29 +1,29 @@
 <template>
 	<view class="container">
 
-		<input style="display: none;" v-model="goalAge" name="用户名" placeholder="请输入你想活到多少岁"
-			:rules="[{ required: true, message: '请输入你想活到多少岁' }]" input-align="center" type="number" />
+		<view>
+			<input style="display: none;" v-model="goalAge" name="用户名" placeholder="请输入你想活到多少岁"
+				:rules="[{ required: true, message: '请输入你想活到多少岁' }]" input-align="center" type="number" />
 
-		<view class="startTime">
-			你好，你在<text class="bigFont">{{startTime}}</text>这一天出生
-		</view>
-
-		<view class="birthday">在这个世界已经<text class="bigFont">{{days}}</text>天</view>
-		<view class="birthday"> <text class="bigFont">{{ hours }}</text>小时了</view>
-		<view class="remain">
-			<view class="years100">如果你活到<text class="bigFont">{{ goalAge}}</text>岁,那么你距离死亡还有</view>
-			<view class="">
-				<text class="bigFont">{{days100}}</text>天，即<text class="bigFont">{{ hours100}}</text>小时
+			<view class="startTime">
+				你好，你在<text class="bigFont">{{startTime}}</text>这一天出生
 			</view>
+
+			<view class="birthday">在这个世界已经<text class="bigFont">{{days}}</text>天</view>
+			<view class="birthday"> <text class="bigFont">{{ hours }}</text>小时了</view>
+			<view class="remain">
+				<view class="years100">如果你活到<text class="bigFont">{{ goalAge}}</text>岁,那么你距离死亡还有</view>
+				<view class="">
+					<text class="bigFont">{{days100}}</text>天，即<text class="bigFont">{{ hours100}}</text>小时
+				</view>
+			</view>
+
+			<view class="warn">
+				生命诚可贵, 爱情价更高，若为自由故，两者皆可抛~
+			</view>
+
 		</view>
 
-		<!-- <view class="countDown">
-			<view class="">生命卡倒计时：</view>
-			<uni-countdown :show-day="false" :second="1200001111100"></uni-countdown>
-		</view> -->
-		<view class="warn">
-			生命诚可贵, 爱情价更高，若为自由故，两者皆可抛~
-		</view>
 	</view>
 </template>
 
