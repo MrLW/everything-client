@@ -1,11 +1,9 @@
 <template>
 	<view class="container">
-
+		<view ref="test"></view>
 		<view class="imageControl">
 			<uni-file-picker limit="3" @select="select"></uni-file-picker>
-
 		</view>
-
 		<view class="main">
 			<view class="title">
 				<!-- 可以使用 CellGroup 作为容器 -->
@@ -45,6 +43,8 @@
 		base64
 	} from '../../../utils';
 
+	const emit = defineEmits(['goHome'])
+
 
 
 	const moment = reactive({
@@ -74,12 +74,8 @@
 				title: "发布成功",
 				icon: 'none'
 			})
-			uni.navigateBack().then(() => {
-				console.log("返回成功")
-			}).catch(err => {
-				console.log("返回失败")
-
-			})
+			// 回到瞬间列表
+			emit('goHome')
 		})
 	}
 
@@ -97,6 +93,8 @@
 	const deleteImage = async () => {
 		moment.images.splice(deleteImageIndex, 1)
 	}
+
+	const tabbar = ref()
 </script>
 
 <style lang="scss">

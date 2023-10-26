@@ -35,6 +35,12 @@
 		activeIndex.value = index;
 		props.choose && props.choose instanceof Function && props.choose();
 	}
+	/**
+	 *  对外暴漏方法
+	 */
+	defineExpose({
+		choose
+	})
 </script>
 
 <style lang="scss">

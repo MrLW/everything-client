@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<lee-tabbar>
+		<lee-tabbar ref="tabbar">
 			<template v-slot:tab1>
 				<view>
 					<home></home>
@@ -11,7 +11,7 @@
 			</template>
 			<template v-slot:tab3>
 				<view>
-					<create-moment></create-moment>
+					<create-moment @goHome="goHome"></create-moment>
 				</view>
 			</template>
 			<template v-slot:tab4>
@@ -28,9 +28,14 @@
 <script setup>
 	import home from './home.vue';
 	import createMoment from './createMoment/createMoment.vue';
+	import {
+		ref
+	} from 'vue'
+	const tabbar = ref()
 
-	const choose = () => {
-		console.log("~~~")
+	function goHome() {
+		console.log("####goHome")
+		tabbar.value.choose(0)
 	}
 </script>
 
