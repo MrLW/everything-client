@@ -18,6 +18,12 @@ import {
 import {
 	user
 } from '../personCenter/index.js'
+import * as storage from '../../utils/storage.js'
+import {
+	toast
+} from '../../utils'
+export let pageSize = 8;
+export let pageNum = 1
 /**
  *  恋爱瞬间列表
  */
@@ -45,10 +51,23 @@ export const goCreateMomentPage = () => {
 		url: "/pages/loveDetail/createMoment/createMoment"
 	})
 }
-
+/**
+ *  初始化瞬间列表
+ */
 export const getNewMomentList = async () => {
-	const res = await getRecordDayLoveMoment();
-	momentList.splice(0, 10000, ...res);
+	pageNum = 1;
+	const res = await getRecordDayLoveMoment(pageNum, pageSize);
+	momentList.splice(0, momentList.length, ...res);
+	// const value = storage.get('momentList');
+	// if (value.length == 0) {
+	// 	const res = await getRecordDayLoveMoment(pageNum, pageSize);
+	// 	momentList.splice(0, momentList.length, ...res);
+	// 	// 将momentList 存储
+	// 	// storage.set("momentList", momentList)
+	// } else {
+	// 	momentList.splice(0, momentList.length, ...value)
+	// }
+
 }
 /**
  *  点赞
@@ -114,3 +133,17 @@ export const getCommentListById = async momentId => {
  *  评价数量
  */
 export const commentCount = computed(() => commentList.length)
+
+/**
+ *  下拉加载更多
+ */
+export const scrolltolower = (e) => {
+	pageNum++;
+	getRecordDayLoveMoment(pageNum, pageSize).then(res => {
+		if (res.length == 0) {
+			return toast("没有更多数据了")
+		}
+		momentList.splice(momentList.length, 0, ...res)
+	})
+
+}

@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<scroll-view class="main" scroll-y>
+		<scroll-view class="main" scroll-y @scrolltolower="scrolltolower">
 			<view class="cardList">
 				<view class="cardItem" v-for="item in momentList" @click="getMomentDetailPage(item.id)" :key="item.id">
 					<uni-card is-shadow>
@@ -40,7 +40,8 @@
 		getMomentDetailPage,
 		goCreateMomentPage,
 		getNewMomentList,
-		love
+		love,
+		scrolltolower,
 	} from './index.js'
 	const days = ref(100)
 

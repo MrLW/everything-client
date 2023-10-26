@@ -2,11 +2,17 @@ import request from '@/utils/request.js'
 
 /**
  *  获取恋爱的所有瞬间
+ *  @param pageNum 第几页
+ *  @param pageSize 每页记录数
  */
-export const getRecordDayLoveMoment = async () => {
+export const getRecordDayLoveMoment = async (pageNum = 1, pageSize = 10) => {
 	return request({
 		url: '/recordDayLoveMoment',
 		method: 'GET',
+		data: {
+			pageNum,
+			pageSize
+		}
 	});
 };
 
