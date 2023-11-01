@@ -39,6 +39,6 @@
 
 <style lang="scss">
 	.container {
-		height: 100%;
+		height: calc(100vh - 170rpx);
 	}
 </style>

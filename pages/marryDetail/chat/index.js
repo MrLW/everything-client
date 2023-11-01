@@ -12,7 +12,7 @@ export const friendId = ref(0);
 
 
 export function addChatItem() {
-	if (content.value == '') return;
+	if (content.value == '') return Promise.reject();
 
 	return new Promise((resolve, reject) => {
 		sendChatMessage({

@@ -23,7 +23,6 @@ export async function connect() {
 		timeout: 5000,
 	})
 	socket.on('connect', function() {
-		console.log("#######", socket, typeof socket, socket.id);
 		uni.setStorageSync('sid', socket.id);
 
 		const token = uni.getStorageSync("token");

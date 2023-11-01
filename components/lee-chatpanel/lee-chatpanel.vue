@@ -36,8 +36,6 @@
 			intoView.value = 'et-' + list[list.length - 1].id;
 		})
 
-	console.log('props:', props)
-
 	// 必须在获取数据之后来设置scrollTop
 	uni.setNavigationBarTitle({
 		title: props.title || '好友'
@@ -45,7 +43,6 @@
 
 	function createChat() {
 		props.addChatItem().then(res => {
-			console.log("添加成功:", res);
 			intoView.value = 'et-' + res.id;
 		})
 	}
@@ -58,8 +55,9 @@
 		background-color: #f6f6f6;
 
 		.chatList {
-			height: 1400rpx;
-			// height: calc(95vh - 100rpx);
+
+			height: calc(100vh - 180rpx);
+			overflow: hidden;
 
 			.chatItem {
 				background-color: #f6f6f6;
@@ -88,8 +86,6 @@
 				justify-content: right;
 				flex-direction: row-reverse;
 			}
-
-			margin-bottom: 300rpx;
 		}
 
 
@@ -99,6 +95,7 @@
 			width: 100%;
 
 			.input {
+				margin: 0 10rpx;
 				display: flex;
 				align-items: center;
 
@@ -109,7 +106,6 @@
 					margin-bottom: 10rpx;
 					height: 60rpx;
 					width: 90%;
-					background-color: white;
 					border-radius: 20rpx;
 					margin-left: 10rpx;
 				}

@@ -43,6 +43,10 @@
 </script>
 
 <style lang="scss">
+	uni-page-body {
+		height: calc(100vh - 100rpx);
+	}
+
 	.container {
 
 		height: 100%;
