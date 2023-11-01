@@ -1,10 +1,8 @@
 <template>
-	<view>
+	<view class="container">
 		<lee-tabbar ref="tabbar">
 			<template v-slot:tab1>
-				<view>
-					<home></home>
-				</view>
+				<home></home>
 			</template>
 			<template v-slot:tab2>
 				<view>关注</view>
@@ -15,11 +13,10 @@
 				</view>
 			</template>
 			<template v-slot:tab4>
-				<view>私聊</view>
+				<private-chat></private-chat>
 			</template>
 			<template v-slot:tab5>
-				<view>wo
-				</view>
+				<my></my>
 			</template>
 		</lee-tabbar>
 	</view>
@@ -28,17 +25,20 @@
 <script setup>
 	import home from './home.vue';
 	import createMoment from './createMoment/createMoment.vue';
+	import privateChat from './privateChat/privateChat.vue';
+	import my from './my/my.vue'
 	import {
 		ref
 	} from 'vue'
 	const tabbar = ref()
 
 	function goHome() {
-		console.log("####goHome")
 		tabbar.value.choose(0)
 	}
 </script>
 
-<style>
-
+<style lang="scss">
+	.container {
+		height: 100%;
+	}
 </style>

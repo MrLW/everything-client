@@ -58,16 +58,6 @@ export const getNewMomentList = async () => {
 	pageNum = 1;
 	const res = await getRecordDayLoveMoment(pageNum, pageSize);
 	momentList.splice(0, momentList.length, ...res);
-	// const value = storage.get('momentList');
-	// if (value.length == 0) {
-	// 	const res = await getRecordDayLoveMoment(pageNum, pageSize);
-	// 	momentList.splice(0, momentList.length, ...res);
-	// 	// 将momentList 存储
-	// 	// storage.set("momentList", momentList)
-	// } else {
-	// 	momentList.splice(0, momentList.length, ...value)
-	// }
-
 }
 /**
  *  点赞

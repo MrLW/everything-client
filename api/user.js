@@ -199,7 +199,9 @@ export function chatList(friendId) {
 		url: "/user/chat",
 		method: 'GET',
 		data: {
-			friendId
+			friendId,
+			pageNum: 1,
+			pageSize: 20
 		}
 	})
 }
@@ -208,12 +210,44 @@ export function chatList(friendId) {
  * @param {Object} keyword eid
  */
 export function searchUsers(keyword) {
-	console.log("#keyword: ", keyword)
 	return request({
 		url: "/user/search",
 		method: 'GET',
 		data: {
 			keyword
+		}
+	})
+}
+/**
+ *  关注用户
+ * @param {Object} friendId
+ */
+export function subscribe(friendId) {
+	return request({
+		url: "/user/subscribe",
+		method: 'POST',
+		data: {
+			friendId
+		}
+	})
+}
+
+/**
+ *  获取当前用户的好友
+ */
+export function friends() {
+	return request({
+		url: "/user/friends",
+		method: 'get',
+	})
+}
+
+export async function checkSocketValid(sid) {
+	return request({
+		url: "/user/checkSocket",
+		method: 'post',
+		data: {
+			sid
 		}
 	})
 }

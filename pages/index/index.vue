@@ -35,7 +35,7 @@
 	import {
 		login
 	} from '../personCenter';
-
+	import '../../socket/index.js'
 	onMounted(function() {
 		login();
 		getAllArea()
