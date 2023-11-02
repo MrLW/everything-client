@@ -10,3 +10,21 @@ export const SOCKET_EVENT_NAME = {
 export const FAB_PATTERN = {
 	buttonColor: "#f16c61"
 };
+
+export const LOVE_MENUS = [{
+		id: 0,
+		name: '作品'
+	},
+	{
+		id: 1,
+		name: '私密'
+	},
+	{
+		id: 2,
+		name: '收藏'
+	},
+	{
+		id: 3,
+		name: '喜欢'
+	},
+]
