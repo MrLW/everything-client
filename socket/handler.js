@@ -4,7 +4,9 @@ import {
 
 export const handler = {
 	addChatItem: function(chatItem) {
-		console.info("chatItem: ", chatItem);
-		chatItemList.value.push(chatItem)
+		const exist = !!chatItemList.value.find(item => chatItem.id == item.id);
+		if (!exist) {
+			chatItemList.value.push(chatItem);
+		}
 	}
 }

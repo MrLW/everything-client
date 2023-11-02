@@ -1,18 +1,18 @@
 <template>
 	<view class="container">
-		<view v-if="activeIndex == 0">
+		<view v-if="activeIndex == 0" class="content">
 			<slot name="tab1"> </slot>
 		</view>
-		<view v-if="activeIndex == 1">
+		<view v-if="activeIndex == 1" class="content">
 			<slot name="tab2"> </slot>
 		</view>
-		<view v-if="activeIndex == 2">
+		<view v-if="activeIndex == 2" class="content">
 			<slot name="tab3"> </slot>
 		</view>
-		<view v-if="activeIndex == 3">
+		<view v-if="activeIndex == 3" class="content">
 			<slot name="tab4"></slot>
 		</view>
-		<view v-if="activeIndex == 4">
+		<view v-if="activeIndex == 4" class="content">
 			<slot name="tab5"> </slot>
 		</view>
 		<view class="btnList">
@@ -46,6 +46,12 @@
 <style lang="scss">
 	.container {
 		width: 100%;
+		height: 100%;
+
+		.content {
+			// 内容区撑满全屏
+			height: 100%;
+		}
 
 		.btnList {
 			position: fixed;

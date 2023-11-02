@@ -6,17 +6,34 @@ import env from '../utils/env'
 import {
 	handler
 } from './handler'
+import * as userapi from '../api/user.js'
+export async function connect() {
 
-const socket = io(env.websocket, {
-	transports: ['websocket', 'polling'],
-	timeout: 5000,
-})
-socket.on('connect', function() {
-	socket.emit(SOCKET_EVENT_NAME.USER_LOGIN, {
-		token: uni.getStorageSync("token")
-	})
+	const sid = uni.getStorageSync('sid');
+	if (sid) {
+		// 检查该socket id 是否有效
+		const {
+			isValid
+		} = await userapi.checkSocketValid(sid);
+		if (isValid) return;
+	}
 
-	socket.on(SOCKET_EVENT_NAME.USER_CHAT_ADD, (res) => {
-		handler.addChatItem(res)
+	let socket = io(env.websocket, {
+		transports: ['websocket', 'polling'],
+		timeout: 5000,
 	})
-})
+	socket.on('connect', function() {
+		uni.setStorageSync('sid', socket.id);
+
+		const token = uni.getStorageSync("token");
+		// 未进行http登录, 无需socket登录
+		if (!token) return;
+		socket.emit(SOCKET_EVENT_NAME.USER_LOGIN, {
+			token: token
+		})
+
+		socket.on(SOCKET_EVENT_NAME.USER_CHAT_ADD, (res) => {
+			handler.addChatItem(res)
+		})
+	})
+}

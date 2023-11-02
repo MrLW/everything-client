@@ -35,7 +35,7 @@
 	import {
 		login
 	} from '../personCenter';
-
+	import '../../socket/index.js'
 	onMounted(function() {
 		login();
 		getAllArea()
@@ -43,6 +43,10 @@
 </script>
 
 <style lang="scss">
+	uni-page-body {
+		height: calc(100vh - 100rpx);
+	}
+
 	.container {
 
 		height: 100%;
