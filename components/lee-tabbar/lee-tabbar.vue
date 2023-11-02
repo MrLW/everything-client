@@ -29,7 +29,8 @@
 	import {
 		ref,
 	} from 'vue'
-	const activeIndex = ref(1);
+	// 默认值
+	const activeIndex = ref(4);
 	const props = defineProps(['choose'])
 	const choose = (index) => {
 		activeIndex.value = index;

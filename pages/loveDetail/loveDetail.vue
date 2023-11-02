@@ -8,9 +8,7 @@
 				<view>关注</view>
 			</template>
 			<template v-slot:tab3>
-				<view>
-					<create-moment @goHome="goHome"></create-moment>
-				</view>
+				<create-moment @goHome="goHome"></create-moment>
 			</template>
 			<template v-slot:tab4>
 				<private-chat></private-chat>
