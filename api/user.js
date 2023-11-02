@@ -193,14 +193,15 @@ export async function verifyEmailCode(email, code) {
 /**
  *  获取好友的聊天记录
  * @param {Object} friendId 好友id
+ * @param {Object} pageNum 第几页
  */
-export function chatList(friendId) {
+export function chatList(friendId, pageNum) {
 	return request({
 		url: "/user/chat",
 		method: 'GET',
 		data: {
 			friendId,
-			pageNum: 1,
+			pageNum: pageNum,
 			pageSize: 20
 		}
 	})

@@ -1,6 +1,7 @@
 <template>
 	<view class="contaienr">
-		<scroll-view class="chatList" scroll-y enable-flex scroll-anchoring :scroll-into-view="intoView">
+		<scroll-view :scroll-into-view="intoView" :refresher-triggered="triggered" @refresherrefresh="refresherrefresh"
+			refresher-enabled class="chatList" scroll-y enable-flex scroll-anchoring>
 			<view class="chatItem" v-for="(item,index) in chatItemList" :key="item.id" :class="{isMe: item.isMe}"
 				:id="`et-`+item.id">
 				<image :src="item.isMe ? item.avatarUrl : item.avatarUrl"></image>
@@ -23,18 +24,18 @@
 <script setup>
 	import {
 		nextTick,
-		ref
+		ref,
 	} from 'vue';
+	import {
+		onPullDownRefresh
+	} from '@dcloudio/uni-app'
 	import {
 		content
 	} from '../../pages/marryDetail/chat';
-	const props = defineProps(['friendId', 'addChatItem', 'getChatList', 'chatItemList', 'title'])
-	let intoView = ref('');
-	props.getChatList(props.friendId)
-		.then((res) => {
-			const list = res.value;
-			intoView.value = 'et-' + list[list.length - 1].id;
-		})
+	const props = defineProps(['friendId', 'addChatItem', 'getChatList', 'chatItemList', 'title', ])
+	const emit = defineEmits(['refresherrefresh'])
+	let triggered = ref(false);
+	const intoView = ref('');
 
 	// 必须在获取数据之后来设置scrollTop
 	uni.setNavigationBarTitle({
@@ -46,6 +47,31 @@
 			intoView.value = 'et-' + res.id;
 		})
 	}
+	/**
+	 *  下拉刷新事件
+	 */
+	function refresherrefresh() {
+		// 交给父组件处理
+		triggered.value = true;
+		emit('refresherrefresh');
+		nextTick(function() {
+			onload(`et-` + props.chatItemList[0].id);
+		})
+	}
+
+	function closerefresherrefresh() {
+		triggered.value = false;
+	}
+
+	function onload(intoViewId) {
+		intoView.value = intoViewId
+	}
+
+	// 对外暴露方法
+	defineExpose({
+		closerefresherrefresh,
+		onload
+	})
 </script>
 
 <style lang="scss">

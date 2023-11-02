@@ -1,7 +1,8 @@
 <template>
 	<view>
-		<lee-chatpanel :addChatItem="addChatItem" :getChatList="getChatList" :friendId="friendId"
-			:chatItemList="chatItemList" :title="title"></lee-chatpanel>
+		<lee-chatpanel :scroll-into-view="intoView" ref="chatpanel" :addChatItem="addChatItem"
+			:getChatList="getChatList" :friendId="friendId" :chatItemList="chatItemList" :title="title"
+			@refresherrefresh="refresherrefresh"></lee-chatpanel>
 	</view>
 </template>
 
@@ -10,8 +11,31 @@
 		addChatItem,
 		getChatList,
 		chatItemList,
+		pageNum,
 	} from '../../marryDetail/chat';
-	defineProps(['friendId', 'title'])
+	import {
+		ref
+	} from 'vue'
+
+	const props = defineProps(['friendId', 'title'])
+	const chatpanel = ref();
+	let intoView = ref('');
+	// 重置
+	pageNum.value = 1;
+	chatItemList.value = []
+	getChatList(props.friendId)
+		.then((res) => {
+			const list = res.value;
+			chatpanel.value.onload(`et-` + list[list.length - 1].id);
+		})
+
+	function refresherrefresh() {
+		pageNum.value++
+		getChatList(props.friendId).then(() => {
+			chatpanel.value.closerefresherrefresh()
+		})
+
+	}
 </script>
 
 <style lang="scss">
