@@ -1,6 +1,7 @@
 <template>
 	<view class="container">
-		<scroll-view class="main" scroll-y @scrolltolower="scrolltolower">
+		<lee-grid ref="grid" @goItemDetail="getMomentDetailPage" :height="height"></lee-grid>
+		<!-- <scroll-view class="main" scroll-y @scrolltolower="scrolltolower">
 			<view class="cardList">
 				<view class="cardItem" v-for="item in momentList" @click="getMomentDetailPage(item.id)" :key="item.id">
 					<uni-card is-shadow>
@@ -22,7 +23,7 @@
 					</uni-card>
 				</view>
 			</view>
-		</scroll-view>
+		</scroll-view> -->
 	</view>
 </template>
 
@@ -32,11 +33,8 @@
 		reactive,
 		ref
 	} from 'vue'
+
 	import {
-		onShow,
-	} from "@dcloudio/uni-app"
-	import {
-		momentList,
 		getMomentDetailPage,
 		goCreateMomentPage,
 		getNewMomentList,
@@ -44,10 +42,29 @@
 		scrolltolower,
 	} from './index.js'
 	const days = ref(100)
-
-	onShow(() => {
-		getNewMomentList()
+	const grid = ref();
+	getNewMomentList().then(res => {
+		syncData(res);
 	})
+	const res = uni.getSystemInfoSync()
+	const height = ref(((res.screenHeight * (750 / res.windowWidth)) - 170)) //将px 转换rpx
+
+
+	// 处理数据并同步数据到grid 组件
+	function syncData(res) {
+		const data = []
+		for (let item of res) {
+			data.push({
+				id: item.id,
+				title: item.title,
+				loves: item.loves,
+				loved: item.loved,
+				user: item['et_user'],
+				cover: item.cover,
+			})
+		}
+		grid.value.updateData(data)
+	}
 </script>
 
 <style lang="scss">

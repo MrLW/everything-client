@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<scroll-view class="main" scroll-y>
+		<scroll-view class="main" scroll-y :style="{height: height + 'rpx'}">
 			<view class="cardList" v-if="data.length > 0">
 				<view class="cardItem" v-for="item in data" @click="goItemDetail(item.id)" :key="item.id">
 					<uni-card is-shadow>
@@ -39,7 +39,9 @@
 	import {
 		serialize
 	} from '../../utils';
-
+	const {
+		height
+	} = defineProps(['height']);
 	const data = ref([])
 	const emit = defineEmits(['goItemDetail'])
 
@@ -66,8 +68,6 @@
 		flex-direction: column;
 
 		.main {
-			height: calc(100vh - 170rpx - 300rpx);
-
 			.cardList {
 				display: flex;
 				flex-wrap: wrap;
