@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<scroll-view class="main" scroll-y>
-			<view class="cardList">
+			<view class="cardList" v-if="data.length > 0">
 				<view class="cardItem" v-for="item in data" @click="goItemDetail(item.id)" :key="item.id">
 					<uni-card is-shadow>
 						<image class="cover" :src="item.cover" model="widthFix"></image>
@@ -10,8 +10,8 @@
 						</view>
 						<view class="userInfo">
 							<view class="info">
-								<image src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
-								<view class="nickname">张三</view>
+								<image :src="item.user.avatarUrl" />
+								<view class="nickname">{{ item.user.username}}</view>
 							</view>
 							<view class="love" @click.stop="love(item.id, $event)">
 								<uni-icons :type="item.loved ? 'heart-filled': 'heart' " size="20"
@@ -22,12 +22,16 @@
 					</uni-card>
 				</view>
 			</view>
+			<view v-if="data.length == 0" class="nodata">
+				<text class="iconfont icon-meiyoushuju"></text>
+			</view>
 		</scroll-view>
 	</view>
 </template>
 
 <script setup>
 	import {
+		nextTick,
 		onMounted,
 		reactive,
 		ref
@@ -35,19 +39,20 @@
 	import {
 		serialize
 	} from '../../utils';
-	const {
-		list
-	} = defineProps(['list'])
-	const data = ref(list)
+
+	const data = ref([])
 	const emit = defineEmits(['goItemDetail'])
 
 	function goItemDetail(id) {
 		emit('goItemDetail', id)
 	}
 
+	/**
+	 * 更新内容区数据
+	 * @param {Object} items
+	 */
 	function updateData(items) {
-		// TODO: 需要对items 进行序列化
-		data.value.splice(0, data.value.length, ...serialize(items));
+		data.value.splice(0, data.value.length, ...items);
 	}
 	defineExpose({
 		updateData
@@ -120,6 +125,16 @@
 			}
 
 
+			.nodata {
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				.iconfont {
+					font-size: 100rpx;
+				}
+			}
 		}
 	}
 </style>

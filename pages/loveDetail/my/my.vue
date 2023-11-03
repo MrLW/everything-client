@@ -4,16 +4,16 @@
 			<image class="avatar" :src="user.avatarUrl" mode=""></image>
 			<view class="settingContainer">
 				<view class="funset">
-					<view class="funitem exps">
-						<text>{{ 0 }}</text>
-						<text>经验</text>
-					</view>
 					<view class="funitem subs">
-						<text>{{ 0 }}</text>
+						<text>{{ user.subs }}</text>
 						<text>关注</text>
 					</view>
+					<view class="funitem exps">
+						<text>{{ user.loves }}</text>
+						<text>喜欢</text>
+					</view>
 					<view class="funitem loves">
-						<text>{{ 0 }}</text>
+						<text>{{ user.collects }}</text>
 						<text>收藏</text>
 					</view>
 				</view>
@@ -27,34 +27,80 @@
 
 <script setup>
 	import {
+		onMounted,
 		ref
 	} from 'vue'
 	import {
 		getMomentDetailPage
 	} from '..';
 	import {
+		getPublicMoments,
+		getPrivateMoments,
+		getStarMoments,
+		getLoveMoments,
+	} from '../../../api/user';
+	import {
 		LOVE_MENUS
 	} from '../../../utils/constant';
 	import {
-		user
+		user,
+		userinfo
 	} from '../../personCenter';
 	const menus = LOVE_MENUS
 	const grid = ref();
-	const list = [{
-		id: 24,
-		title: '0',
-		cover: 'http://192.168.20.221:3000/moment/1695608393971.jpg',
-		loves: 123,
-		loved: true
-	}]
+	const list = []
+
+	onMounted(function() {
+		// 获取用户信息
+		userinfo()
+		publicMoments();
+	})
+
+
 
 	function goItemDetail(id) {
 		getMomentDetailPage(id)
 	}
 
+	function publicMoments() {
+		getPublicMoments().then(res => syncData(res))
+	}
+
+	function privateMoments() {
+		getPrivateMoments().then(res => syncData(res))
+	}
+
+	function starMoments() {
+		getStarMoments().then(res => syncData(res))
+	}
+
+	function loveMoments() {
+		getLoveMoments().then(res => syncData(res))
+	}
+
+	// 处理数据并同步数据到grid 组件
+	function syncData(res) {
+		const data = []
+		for (let item of res) {
+			data.push({
+				id: item.id,
+				title: item.title,
+				loves: item.loves,
+				loved: item.loved,
+				user: item['et_user'],
+				cover: item.cover,
+			})
+		}
+		grid.value.updateData(data)
+	}
+
+
 	function choose(index) {
-		list[0].title = ~~index
-		grid.value.updateData(list)
+		// 根据不同的index 加载不同的内容区数据
+		if (index == 0) publicMoments();
+		else if (index == 1) privateMoments();
+		else if (index == 2) starMoments();
+		else if (index == 3) loveMoments();
 	}
 </script>
 
@@ -68,12 +114,12 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			background-color: darkgrey;
 			margin: 0 auto;
-			width: 100%;
+			width: 95%;
 			align-items: center;
 			padding: 20rpx 0;
-
+			border-radius: 10rpx;
+			background-image: linear-gradient(to right bottom, darkgrey, rgba(255, 0, 0, 1));
 
 			.avatar {
 				width: 150rpx;

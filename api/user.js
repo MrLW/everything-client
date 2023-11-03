@@ -252,3 +252,31 @@ export async function checkSocketValid(sid) {
 		}
 	})
 }
+
+export async function getPublicMoments() {
+	return request({
+		url: "/user/lovemoment/public",
+		method: 'get',
+	})
+}
+
+export async function getPrivateMoments() {
+	return request({
+		url: "/user/lovemoment/private",
+		method: 'get',
+	})
+}
+
+export async function getLoveMoments() {
+	return request({
+		url: "/user/lovemoment/love",
+		method: 'get',
+	})
+}
+
+export async function getStarMoments() {
+	return request({
+		url: "/user/lovemoment/star",
+		method: 'get',
+	})
+}
