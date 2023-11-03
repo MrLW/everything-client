@@ -23,6 +23,7 @@ export const user = ref({
 	exps: 0,
 	subs: 0,
 	loves: 0,
+	collects: 0,
 	district: '',
 	desc: '',
 	eid: '',
