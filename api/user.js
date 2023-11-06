@@ -280,3 +280,20 @@ export async function getStarMoments() {
 		method: 'get',
 	})
 }
+
+export async function getContacts() {
+	return request({
+		url: "/user/contacts",
+		method: 'get',
+	})
+}
+
+export async function getFriendMoments(friendId) {
+	return request({
+		url: "/user/lovemoment/friend",
+		method: 'get',
+		data: {
+			friendId
+		}
+	})
+}

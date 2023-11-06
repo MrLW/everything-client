@@ -5,7 +5,7 @@
 				<home></home>
 			</template>
 			<template v-slot:tab2>
-				<view>关注</view>
+				<subscribe></subscribe>
 			</template>
 			<template v-slot:tab3>
 				<create-moment @goHome="goHome"></create-moment>
@@ -25,6 +25,7 @@
 	import createMoment from './createMoment/createMoment.vue';
 	import privateChat from './privateChat/privateChat.vue';
 	import my from './my/my.vue'
+	import subscribe from './subscribe/index.vue'
 	import {
 		ref
 	} from 'vue'

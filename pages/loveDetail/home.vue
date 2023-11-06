@@ -47,6 +47,8 @@
 		syncData(res);
 	})
 	const res = uni.getSystemInfoSync()
+	console.info("res.screenHeight: ", res.screenHeight)
+	console.info("res.windowHeight: ", res.windowHeight)
 	const height = ref(((res.screenHeight * (750 / res.windowWidth)) - 170)) //将px 转换rpx
 
 
