@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class="list">
+		<view class="list" v-if="mensesList.length > 0">
 			<view class="item" v-for="item in mensesList" :key="item.id">
 				<image :src="item.avatarUrl" class="avatarUrl"></image>
 				<view class="time">
@@ -8,6 +8,9 @@
 					<text class="diffDays"> {{item.diffDays ? "距离上次来姨妈有" + item.diffDays + "天啦": "您的第一次记录姨妈"}} ~</text>
 				</view>
 			</view>
+		</view>
+		<view v-else class="empty">
+			<text class="iconfont icon-meiyoushuju"></text>
 		</view>
 		<uni-popup ref="popup">
 			<view class="popup-content">
@@ -53,7 +56,6 @@
 	const form = ref();
 
 	function showModePage(type) {
-		console.log("#popup:", popup)
 		popup.value.open(type);
 	}
 	getAllMenses()
@@ -98,6 +100,17 @@
 					}
 				}
 
+			}
+		}
+
+		.empty {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-top: 400rpx;
+
+			.iconfont {
+				font-size: 100rpx;
 			}
 		}
 

@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<scroll-view class="main" scroll-y>
+		<scroll-view class="main" scroll-y :style="{height: height + 'rpx'}">
 			<view class="cardList" v-if="data.length > 0">
 				<view class="cardItem" v-for="item in data" @click="goItemDetail(item.id)" :key="item.id">
 					<uni-card is-shadow>
@@ -39,7 +39,9 @@
 	import {
 		serialize
 	} from '../../utils';
-
+	const {
+		height
+	} = defineProps(['height']);
 	const data = ref([])
 	const emit = defineEmits(['goItemDetail'])
 
@@ -54,8 +56,25 @@
 	function updateData(items) {
 		data.value.splice(0, data.value.length, ...items);
 	}
+
+	// 处理数据并同步数据到grid 组件
+	function syncData(res) {
+		const data = []
+		for (let item of res) {
+			data.push({
+				id: item.id,
+				title: item.title,
+				loves: item.loves,
+				loved: item.loved,
+				user: item['et_user'],
+				cover: item.cover,
+			})
+		}
+		updateData(data)
+	}
 	defineExpose({
-		updateData
+		updateData,
+		syncData
 	})
 </script>
 
@@ -66,8 +85,6 @@
 		flex-direction: column;
 
 		.main {
-			height: calc(100vh - 170rpx - 300rpx);
-
 			.cardList {
 				display: flex;
 				flex-wrap: wrap;

@@ -58,6 +58,7 @@ export const getNewMomentList = async () => {
 	pageNum = 1;
 	const res = await getRecordDayLoveMoment(pageNum, pageSize);
 	momentList.splice(0, momentList.length, ...res);
+	return momentList;
 }
 /**
  *  点赞

@@ -20,7 +20,7 @@
 			</view>
 		</view>
 		<lee-nav :menus="menus" class="nav" @choose="choose">
-			<lee-grid ref="grid" :list="list" @goItemDetail="goItemDetail"></lee-grid>
+			<lee-grid :height="height" ref="grid" :list="list" @goItemDetail="goItemDetail"></lee-grid>
 		</lee-nav>
 	</view>
 </template>
@@ -46,6 +46,8 @@
 		user,
 		userinfo
 	} from '../../personCenter';
+	const res = uni.getSystemInfoSync()
+	const height = ref(((res.screenHeight * (750 / res.windowWidth)) - 170 - 300)) //将px 转换rpx
 	const menus = LOVE_MENUS
 	const grid = ref();
 	const list = []
@@ -171,8 +173,5 @@
 				}
 			}
 		}
-
-
-		.nav {}
 	}
 </style>
