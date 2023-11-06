@@ -13,7 +13,7 @@
 <style lang="scss">
 	.container {
 		background-color: darkgrey;
-		height: 100%;
+		height: calc(100vh - 88rpx);
 		overflow: hidden;
 
 		.logout {

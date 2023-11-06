@@ -32,7 +32,7 @@
 
 <style lang="scss">
 	.container {
-		height: 100%;
+		height: calc(100vh - 88rpx);
 		background-color: #f6f6f6;
 
 		.messageList {

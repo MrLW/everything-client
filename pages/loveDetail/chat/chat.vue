@@ -1,8 +1,7 @@
 <template>
 	<view>
-		<lee-chatpanel :scroll-into-view="intoView" ref="chatpanel" :addChatItem="addChatItem"
-			:getChatList="getChatList" :friendId="friendId" :chatItemList="chatItemList" :title="title"
-			@refresherrefresh="refresherrefresh"></lee-chatpanel>
+		<lee-chatpanel ref="chatpanel" :addChatItem="addChatItem" :getChatList="getChatList" :friendId="friendId"
+			:chatItemList="chatItemList" :title="title" @refresherrefresh="refresherrefresh"></lee-chatpanel>
 	</view>
 </template>
 
@@ -16,10 +15,15 @@
 	import {
 		ref
 	} from 'vue'
+	import {
+		currentSocket
+	} from '../../../socket';
+	import {
+		SOCKET_EVENT_NAME
+	} from '../../../utils/constant';
 
 	const props = defineProps(['friendId', 'title'])
 	const chatpanel = ref();
-	let intoView = ref('');
 	// 重置
 	pageNum.value = 1;
 	chatItemList.value = []
@@ -34,8 +38,13 @@
 		getChatList(props.friendId).then(() => {
 			chatpanel.value.closerefresherrefresh()
 		})
-
 	}
+
+	currentSocket && currentSocket.value && currentSocket.value.on(SOCKET_EVENT_NAME.USER_CHAT_UPDATE_INTOVIEW, function({
+		id
+	}) {
+		chatpanel.value.updateIntoViewId(id)
+	})
 </script>
 
 <style lang="scss">
