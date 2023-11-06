@@ -40,6 +40,9 @@
 		getLoveMoments,
 	} from '../../../api/user';
 	import {
+		currentSocket
+	} from '../../../socket';
+	import {
 		LOVE_MENUS
 	} from '../../../utils/constant';
 	import {
@@ -65,37 +68,20 @@
 	}
 
 	function publicMoments() {
-		getPublicMoments().then(res => syncData(res))
+		getPublicMoments().then(res => grid.value.syncData(res))
 	}
 
 	function privateMoments() {
-		getPrivateMoments().then(res => syncData(res))
+		getPrivateMoments().then(res => grid.value.syncData(res))
 	}
 
 	function starMoments() {
-		getStarMoments().then(res => syncData(res))
+		getStarMoments().then(res => grid.value.syncData(res))
 	}
 
 	function loveMoments() {
-		getLoveMoments().then(res => syncData(res))
+		getLoveMoments().then(res => grid.value.syncData(res))
 	}
-
-	// 处理数据并同步数据到grid 组件
-	function syncData(res) {
-		const data = []
-		for (let item of res) {
-			data.push({
-				id: item.id,
-				title: item.title,
-				loves: item.loves,
-				loved: item.loved,
-				user: item['et_user'],
-				cover: item.cover,
-			})
-		}
-		grid.value.updateData(data)
-	}
-
 
 	function choose(index) {
 		// 根据不同的index 加载不同的内容区数据

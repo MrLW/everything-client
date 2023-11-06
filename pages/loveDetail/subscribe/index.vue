@@ -1,14 +1,15 @@
 <template>
-	<scroll-view class="scrollview" scroll-x="true">
-		<!-- 横向滚动时, 需要使用block 标签 -->
-		<block v-for="item in persons" :key="item.id">
-			<view class="item">
-				<image :src="item.avatarUrl" class="avatar"></image>
-			</view>
-		</block>
-	</scroll-view>
-
-	<lee-grid :height="height" ref="grid" @goItemDetail="goItemDetail"></lee-grid>
+	<!-- 横向滚动时, 需要使用block 标签 -->
+	<view class="container">
+		<scroll-view class="scrollview" scroll-x="true" enable-flex>
+			<block v-for="item in persons" :key="item.id">
+				<view class="item">
+					<image :src="item.avatarUrl" class="avatar"></image>
+				</view>
+			</block>
+		</scroll-view>
+		<lee-grid :height="height" ref="grid" @goItemDetail="goItemDetail"></lee-grid>
+	</view>
 
 </template>
 <script setup>
@@ -32,7 +33,7 @@
 		})
 	})
 	const res = uni.getSystemInfoSync()
-	const height = ref(((res.screenHeight * (750 / res.windowWidth)) - 170 - 200))
+	const height = ref(((res.screenHeight * (750 / res.windowWidth)) - 80 - 100 - 150))
 
 
 	function goItemDetail(id) {
@@ -40,25 +41,36 @@
 	}
 </script>
 <style lang="scss">
-	.scrollview {
-		white-space: nowrap;
-		height: 200rpx;
-		margin-top: 25rpx;
-		border-bottom: 1rpx solid darkgrey;
+	.container {
+		display: flex;
+		flex-direction: column;
 
-		.item {
-			width: 150rpx;
+		.scrollview {
+			white-space: nowrap;
 			height: 150rpx;
-			display: inline-flex;
+			border-bottom: 1rpx solid darkgrey;
+			display: flex;
+			align-items: center;
+			box-sizing: border-box;
 
-			.avatar {
-				background-color: darkgrey;
-				width: 150rpx;
-				height: 150rpx;
-				border-radius: 50%;
+			.item {
+				margin-top: 15rpx;
+				display: inline-flex;
+				padding: 0 5rpx;
+				box-sizing: border-box;
+
+				.avatar {
+					background-color: darkgrey;
+					width: 120rpx;
+					height: 120rpx;
+					border-radius: 50%;
+				}
+
+				margin-right: 15rpx;
 			}
-
-			margin-right: 15rpx;
 		}
+
+
+
 	}
 </style>

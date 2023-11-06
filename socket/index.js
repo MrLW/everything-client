@@ -7,6 +7,11 @@ import {
 	handler
 } from './handler'
 import * as userapi from '../api/user.js'
+import {
+	ref
+} from 'vue'
+export const currentSocket = ref(null);
+
 export async function connect() {
 
 	const sid = uni.getStorageSync('sid');
@@ -36,4 +41,5 @@ export async function connect() {
 			handler.addChatItem(res)
 		})
 	})
+	return socket;
 }

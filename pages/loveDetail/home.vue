@@ -1,29 +1,6 @@
 <template>
 	<view class="container">
 		<lee-grid ref="grid" @goItemDetail="getMomentDetailPage" :height="height"></lee-grid>
-		<!-- <scroll-view class="main" scroll-y @scrolltolower="scrolltolower">
-			<view class="cardList">
-				<view class="cardItem" v-for="item in momentList" @click="getMomentDetailPage(item.id)" :key="item.id">
-					<uni-card is-shadow>
-						<image class="cover" :src="item.cover" model="widthFix"></image>
-						<view class="title">
-							{{item.title}}
-						</view>
-						<view class="userInfo">
-							<view class="info">
-								<image src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
-								<view class="nickname">张三</view>
-							</view>
-							<view class="love" @click.stop="love(item.id, $event)">
-								<uni-icons :type="item.loved ? 'heart-filled': 'heart' " size="20"
-									:color="item.loved ? 'red': 'darkgray'"></uni-icons>
-								<text>{{ item.loves}}</text>
-							</view>
-						</view>
-					</uni-card>
-				</view>
-			</view>
-		</scroll-view> -->
 	</view>
 </template>
 
@@ -49,7 +26,7 @@
 	const res = uni.getSystemInfoSync()
 	console.info("res.screenHeight: ", res.screenHeight)
 	console.info("res.windowHeight: ", res.windowHeight)
-	const height = ref(((res.screenHeight * (750 / res.windowWidth)) - 170)) //将px 转换rpx
+	const height = ref(((res.screenHeight * (750 / res.windowWidth)) - 80 - 100)) //将px 转换rpx
 
 
 	// 处理数据并同步数据到grid 组件

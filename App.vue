@@ -1,13 +1,18 @@
 <script>
 	import {
-		connect
+		connect,
+		currentSocket,
 	} from './socket'
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
 		},
 		onShow: function() {
-			connect()
+			connect().then(socket => {
+				// 将socket 存储
+				currentSocket.value = socket;
+
+			})
 		},
 		onHide: function() {
 			console.log('App Hide')

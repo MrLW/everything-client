@@ -43,9 +43,7 @@
 	})
 
 	function createChat() {
-		props.addChatItem().then(res => {
-			intoView.value = 'et-' + res.id;
-		})
+		props.addChatItem()
 	}
 	/**
 	 *  下拉刷新事件
@@ -67,10 +65,15 @@
 		intoView.value = intoViewId
 	}
 
+	function updateIntoViewId(id) {
+		intoView.value = `et-` + id;
+	}
+
 	// 对外暴露方法
 	defineExpose({
 		closerefresherrefresh,
-		onload
+		onload,
+		updateIntoViewId,
 	})
 </script>
 
