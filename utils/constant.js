@@ -28,4 +28,9 @@ export const LOVE_MENUS = [{
 		id: 3,
 		name: '喜欢'
 	},
-]
+];
+
+export const PAGE = {
+	SIZE: 8,
+	NUM: 1
+}

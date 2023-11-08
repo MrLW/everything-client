@@ -30,7 +30,7 @@
 		ref,
 	} from 'vue'
 	// 默认值
-	const activeIndex = ref(1);
+	const activeIndex = ref(0);
 	const props = defineProps(['choose'])
 	const choose = (index) => {
 		activeIndex.value = index;

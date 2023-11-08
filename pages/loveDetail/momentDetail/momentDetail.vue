@@ -2,12 +2,12 @@
 	<view class="container">
 		<view class="momentDetail">
 			<swiper class="swipeList" indicator-color="white" indicator-dots>
-				<swiper-item class="swipeItem" v-for="(image, index) in  currentMoment.images" :key="index">
+				<swiper-item class="swipeItem" v-for="(image, index) in moment.images" :key="index">
 					<image :src="image" mode="aspectFit"></image>
 				</swiper-item>
 			</swiper>
-			<view class="title">{{currentMoment.title}}</view>
-			<view class="content">{{currentMoment.content}}</view>
+			<view class="title">{{moment.title}}</view>
+			<view class="content">{{moment.content}}</view>
 		</view>
 		<scroll-view class="commentList" scroll-y>
 			<view class="commentItem" v-for="comment in commentList" :key="comment.id">
@@ -32,14 +32,13 @@
 			</view>
 			<view class="funcs">
 				<view class="funcItem" @click="love(id, $event)">
-					<uni-icons :type="currentMoment.loved ? 'heart-filled': 'heart' "
-						:color="currentMoment.loved ? 'red': 'darkgray'"
-						size="30"></uni-icons><text>{{currentMoment.loves}}</text>
+					<uni-icons :type="moment.loved ? 'heart-filled': 'heart' " :color="moment.loved ? 'red': 'darkgray'"
+						size="30"></uni-icons><text>{{moment.loves}}</text>
 				</view>
 				<view class="funcItem" @click="star(id)">
-					<uni-icons :type="currentMoment.stared ? 'star-filled': 'star' "
-						:color="currentMoment.stared ? 'gold': 'darkgray'" class="icons"
-						size="30"></uni-icons><text>{{currentMoment.stars}}</text>
+					<uni-icons :type="moment.stared ? 'star-filled': 'star' "
+						:color="moment.stared ? 'gold': 'darkgray'" class="icons"
+						size="30"></uni-icons><text>{{moment.stars}}</text>
 				</view>
 				<view class="funcItem" @click="goChat">
 					<uni-icons class="icons" type="chat" size="30"></uni-icons><text>{{commentCount}}</text>
@@ -52,29 +51,37 @@
 <script setup>
 	import {
 		onMounted,
+		reactive,
 		ref
 	} from 'vue';
 	import {
 		commentText,
 		commentList,
 		getMomentById,
-		currentMoment,
-		love,
 		star,
 		addComment,
 		getCommentListById,
 		commentCount,
+		reallove,
 	} from '../index.js';
 	const props = defineProps(["id"]);
 	const commentTextRef = ref();
+	const moment = reactive({})
 
 	onMounted(async () => {
-		getMomentById(props.id);
+		getMomentById(props.id).then(res => {
+			for (let key in res) {
+				moment[key] = res[key]
+			}
+		})
 		getCommentListById(props.id);
 	})
 	const goChat = () => {
-		console.log("#goChat");
 		commentTextRef.value.$el.focus();
+	}
+
+	function love() {
+		reallove(moment)
 	}
 </script>
 
