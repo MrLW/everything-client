@@ -20,18 +20,24 @@
 			</view>
 		</view>
 		<lee-nav :menus="menus" class="nav" @choose="choose">
-			<lee-grid :height="height" ref="grid" :list="list" @goItemDetail="goItemDetail"></lee-grid>
+			<lee-grid :height="height" ref="grid" :list="public_momentList" @goItemDetail="goItemDetail"
+				@loadmore="loadmore" @love="love"></lee-grid>
 		</lee-nav>
 	</view>
 </template>
 
 <script setup>
 	import {
+		inject,
 		onMounted,
+		provide,
+		reactive,
 		ref
 	} from 'vue'
 	import {
-		getMomentDetailPage
+		formdata,
+		getMomentDetailPage,
+		reallove,
 	} from '..';
 	import {
 		getPublicMoments,
@@ -43,17 +49,16 @@
 		currentSocket
 	} from '../../../socket';
 	import {
-		LOVE_MENUS
+		toast
+	} from '../../../utils';
+	import {
+		LOVE_MENUS,
+		PAGE
 	} from '../../../utils/constant';
 	import {
 		user,
 		userinfo
 	} from '../../personCenter';
-	const res = uni.getSystemInfoSync()
-	const height = ref(((res.screenHeight * (750 / res.windowWidth)) - 170 - 300)) //将px 转换rpx
-	const menus = LOVE_MENUS
-	const grid = ref();
-	const list = []
 
 	onMounted(function() {
 		// 获取用户信息
@@ -61,34 +66,120 @@
 		publicMoments();
 	})
 
+	const res = uni.getSystemInfoSync()
+	const height = ref(((res.screenHeight * (750 / res.windowWidth)) - 170 - 400)) //将px 转换rpx
+	const menus = LOVE_MENUS
+	const grid = ref();
+	const public_momentList = reactive([]);
 
+
+	let pageNum = PAGE.NUM,
+		pageSize = PAGE.SIZE;
+
+	const currentIndex = ref(0);
+
+
+	const UPDATA_DATA_TYPE = {
+		APPEND: 'append',
+		REPLACE: 'replace'
+	}
 
 	function goItemDetail(id) {
 		getMomentDetailPage(id)
 	}
 
-	function publicMoments() {
-		getPublicMoments().then(res => grid.value.syncData(res))
+	function publicMoments(pageNum, pageSize, type) {
+		return getPublicMoments(pageNum, pageSize).then(res => {
+
+			if (currentIndex.value != 0) {
+				public_momentList.splice(0, public_momentList.length);
+			}
+
+			type == UPDATA_DATA_TYPE.APPEND ? public_momentList.splice(public_momentList.length, 0, ...formdata(
+					res)) :
+				public_momentList.splice(0, public_momentList.length, ...formdata(res));
+			return res;
+		})
 	}
 
-	function privateMoments() {
-		getPrivateMoments().then(res => grid.value.syncData(res))
+	function privateMoments(pageNum, pageSize, type) {
+		return getPrivateMoments(pageNum, pageSize).then(res => {
+			if (currentIndex.value != 1) {
+				public_momentList.splice(0, public_momentList.length);
+			}
+
+			type == UPDATA_DATA_TYPE.APPEND ? public_momentList.splice(public_momentList.length, 0, ...formdata(
+					res)) :
+				public_momentList.splice(0, public_momentList.length, ...formdata(res));
+			return res;
+		})
 	}
 
-	function starMoments() {
-		getStarMoments().then(res => grid.value.syncData(res))
+	function starMoments(pageNum, pageSize, type) {
+		return getStarMoments(pageNum, pageSize).then(res => {
+			if (currentIndex.value != 2) {
+				public_momentList.splice(0, public_momentList.length);
+			}
+			type == UPDATA_DATA_TYPE.APPEND ? public_momentList.splice(public_momentList.length, 0, ...formdata(
+					res)) :
+				public_momentList.splice(0, public_momentList.length, ...formdata(res));
+			return res;
+		})
 	}
 
-	function loveMoments() {
-		getLoveMoments().then(res => grid.value.syncData(res))
+	function loveMoments(pageNum, pageSize, type) {
+		return getLoveMoments(pageNum).then(res => {
+			if (currentIndex.value != 3) {
+				public_momentList.splice(0, public_momentList.length);
+			}
+			type == UPDATA_DATA_TYPE.APPEND ? public_momentList.splice(public_momentList.length, 0, ...formdata(
+					res)) :
+				public_momentList.splice(0, public_momentList.length, ...formdata(res));
+			return res;
+		})
 	}
 
 	function choose(index) {
 		// 根据不同的index 加载不同的内容区数据
-		if (index == 0) publicMoments();
-		else if (index == 1) privateMoments();
-		else if (index == 2) starMoments();
-		else if (index == 3) loveMoments();
+		if (index == 0) publicMoments(pageNum, pageSize, 'replace');
+		else if (index == 1) privateMoments(pageNum, pageSize, 'replace');
+		else if (index == 2) starMoments(pageNum, pageSize, 'replace');
+		else if (index == 3) loveMoments(pageNum, pageSize, 'replace');
+
+		currentIndex.value = index;
+	}
+	/**
+	 *  下拉加载更多
+	 */
+	function loadmore(e) {
+		const index = currentIndex.value;
+		// 根据不同的index 加载不同的内容区数据
+		pageNum++;
+		if (index == 0) publicMoments(pageNum, pageSize, 'append').then(res => res.length == 0 ? pageNum-- && toast(
+				"没有更多数据!") : console
+			.info("#publicMoments data: ", data))
+		else if (index == 1) privateMoments(pageNum, pageSize, 'append').then(res => res.length == 0 ? pageNum-- && toast(
+				"没有更多数据!") :
+			console
+			.info("#publicMoments data: ", data));
+		else if (index == 2) starMoments(pageNum, pageSize, 'append').then(res => res.length == 0 ? pageNum-- && toast(
+				"没有更多数据!") :
+			console
+			.info("#starMoments data: ", data));
+		else if (index == 3) loveMoments(pageNum, pageSize, 'append').then(res => res.length == 0 ? pageNum-- && toast(
+				"没有更多数据!") :
+			console
+			.info("#loveMoments data: ", data));
+
+		// 告诉加载完毕
+		setTimeout(function() {
+			grid.value.loadmoreDone()
+		}, 300)
+	}
+
+	function love(id) {
+		const moment = public_momentList.find(item => item.id == id);
+		moment && reallove(moment);
 	}
 </script>
 
@@ -96,6 +187,7 @@
 	.container {
 		display: flex;
 		flex-direction: column;
+		height: 100%;
 
 		.userinfo {
 			height: 400rpx;
@@ -158,6 +250,11 @@
 					}
 				}
 			}
+		}
+
+
+		.nav {
+			// height: 500rpx;
 		}
 	}
 </style>

@@ -1,6 +1,7 @@
 <template>
 	<view class="container">
-		<lee-grid ref="grid" @goItemDetail="getMomentDetailPage" :height="height"></lee-grid>
+		<lee-grid ref="grid" @goItemDetail="getMomentDetailPage" :height="height" @loadmore="loadmore" @love="love"
+			:list="public_momentList"></lee-grid>
 	</view>
 </template>
 
@@ -10,39 +11,57 @@
 		reactive,
 		ref
 	} from 'vue'
+	import {
+		getRecordDayLoveMoment
+	} from '../../api/recordDay.js';
+	import {
+		toast
+	} from '../../utils/index.js';
 
 	import {
 		getMomentDetailPage,
 		goCreateMomentPage,
-		getNewMomentList,
-		love,
-		scrolltolower,
+		formdata,
+		reallove
 	} from './index.js'
-	const days = ref(100)
+
 	const grid = ref();
-	getNewMomentList().then(res => {
-		syncData(res);
-	})
+	let pageNum = 1,
+		pageSize = 8;
+	const public_momentList = reactive([]);
 	const res = uni.getSystemInfoSync()
-	console.info("res.screenHeight: ", res.screenHeight)
-	console.info("res.windowHeight: ", res.windowHeight)
 	const height = ref(((res.screenHeight * (750 / res.windowWidth)) - 80 - 100)) //将px 转换rpx
 
+	onMounted(function() {
+		getMomentList()
+	})
 
-	// 处理数据并同步数据到grid 组件
-	function syncData(res) {
-		const data = []
-		for (let item of res) {
-			data.push({
-				id: item.id,
-				title: item.title,
-				loves: item.loves,
-				loved: item.loved,
-				user: item['et_user'],
-				cover: item.cover,
-			})
-		}
-		grid.value.updateData(data)
+	/**
+	 *  下拉加载更多
+	 */
+	const loadmore = (e) => {
+		pageNum++;
+		getRecordDayLoveMoment(pageNum, pageSize).then(res => {
+			grid.value.loadmoreDone()
+			if (res.length == 0) {
+				return toast("没有更多数据了")
+			}
+			public_momentList.splice(public_momentList.length, 0, ...formdata(res))
+		})
+	}
+
+	/**
+	 *  获取瞬间列表
+	 */
+	function getMomentList() {
+		getRecordDayLoveMoment(pageNum, pageSize).then(res => {
+			public_momentList.splice(0, 0, ...formdata(res))
+		})
+	}
+
+	function love(id) {
+		const moment = public_momentList.find(item => item.id == id);
+		moment && reallove(moment);
 	}
 </script>
 

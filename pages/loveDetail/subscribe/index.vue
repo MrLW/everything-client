@@ -56,11 +56,12 @@
 			.item {
 				margin-top: 15rpx;
 				display: inline-flex;
-				padding: 0 5rpx;
 				box-sizing: border-box;
+				background-color: darkgrey;
+				border-radius: 50%;
+				padding: 5rpx;
 
 				.avatar {
-					background-color: darkgrey;
 					width: 120rpx;
 					height: 120rpx;
 					border-radius: 50%;

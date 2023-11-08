@@ -27,6 +27,20 @@
 				<text class="iconfont icon-xiangyoujiantou1"></text>
 			</view>
 			<view class="useritem">
+				<view class="label">生日</view>
+				<view>
+					<view class="uni-list-cell-db">
+						<picker mode="date" :value="user.birthday" :start="getDate('start')" :end="getDate('end')"
+							@change="updateUserBirthday" fields="day">
+							<view class="uni-input">
+								{{ user.birthday || `${new Date().getFullYear()}-01-01`}}
+							</view>
+						</picker>
+					</view>
+				</view>
+				<text class="iconfont icon-xiangyoujiantou1"></text>
+			</view>
+			<view class="useritem">
 				<view class="label">简介</view>
 				<!-- single-ellipsis -->
 				<view class="desc single-ellipsis" @click="showEditDescPage">{{ user.desc }}</view>
@@ -40,11 +54,6 @@
 				</view>
 				<text class="iconfont icon-xiangyoujiantou1"></text>
 			</view>
-			<!-- <view class="useritem">
-				<view class="label">背景图</view>
-				<view>上传背景图</view>
-				<text class="iconfont icon-xiangyoujiantou1"></text>
-			</view> -->
 		</view>
 	</view>
 </template>
@@ -68,9 +77,29 @@
 		showEditEidPage,
 		sexList,
 		updateUserSex,
+		updateUserBirthday,
 	} from '.'
+	import {
+		updateBirthday
+	} from "../../../api/user.js";
 
 	const onnodeclick = () => {}
+
+	function getDate(type) {
+		const date = new Date();
+		let year = date.getFullYear();
+		let month = date.getMonth() + 1;
+		let day = date.getDate();
+
+		if (type === 'start') {
+			year = year - 60;
+		} else if (type === 'end') {
+			year = year + 2;
+		}
+		month = month > 9 ? month : '0' + month;
+		day = day > 9 ? day : '0' + day;
+		return `${year}-${month}-${day}`;
+	}
 </script>
 
 <style lang="scss">

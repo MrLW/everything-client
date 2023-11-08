@@ -1,4 +1,7 @@
 import request from '@/utils/request.js'
+import {
+	PAGE
+} from '../utils/constant'
 import env from '../utils/env'
 
 /**
@@ -129,6 +132,20 @@ export async function updateSex(sex) {
 }
 
 /**
+ * 更新用户生日
+ * @param {Object} sex
+ */
+export async function updateBirthday(birthday) {
+	return request({
+		url: "/user/updateBirthday",
+		method: 'POST',
+		data: {
+			birthday
+		}
+	})
+}
+
+/**
  *  获取当前伴侣的信息
  */
 export async function marryInfo() {
@@ -253,31 +270,47 @@ export async function checkSocketValid(sid) {
 	})
 }
 
-export async function getPublicMoments() {
+export async function getPublicMoments(pageNum = PAGE.NUM, pageSize = PAGE.SIZE) {
 	return request({
 		url: "/user/lovemoment/public",
 		method: 'get',
+		data: {
+			pageNum,
+			pageSize
+		},
 	})
 }
 
-export async function getPrivateMoments() {
+export async function getPrivateMoments(pageNum = PAGE.NUM, pageSize = PAGE.SIZE) {
 	return request({
 		url: "/user/lovemoment/private",
 		method: 'get',
+		data: {
+			pageNum,
+			pageSize
+		},
 	})
 }
 
-export async function getLoveMoments() {
+export async function getLoveMoments(pageNum = PAGE.NUM, pageSize = PAGE.SIZE) {
 	return request({
 		url: "/user/lovemoment/love",
 		method: 'get',
+		data: {
+			pageNum,
+			pageSize
+		},
 	})
 }
 
-export async function getStarMoments() {
+export async function getStarMoments(pageNum = PAGE.NUM, pageSize = PAGE.SIZE) {
 	return request({
 		url: "/user/lovemoment/star",
 		method: 'get',
+		data: {
+			pageNum,
+			pageSize
+		},
 	})
 }
 

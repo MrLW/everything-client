@@ -15,6 +15,7 @@ import {
 import {
 	base64
 } from '../../utils';
+
 export const user = ref({
 	username: '',
 	avatarUrl: '',
@@ -28,6 +29,7 @@ export const user = ref({
 	desc: '',
 	eid: '',
 	sex: 0,
+	birthday: ''
 })
 /**
  *  微信授权登录

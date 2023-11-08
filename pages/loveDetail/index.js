@@ -22,8 +22,7 @@ import * as storage from '../../utils/storage.js'
 import {
 	toast
 } from '../../utils'
-export let pageSize = 8;
-export let pageNum = 1
+export var pageSize = 8;
 /**
  *  恋爱瞬间列表
  */
@@ -51,15 +50,7 @@ export const goCreateMomentPage = () => {
 		url: "/pages/loveDetail/createMoment/createMoment"
 	})
 }
-/**
- *  初始化瞬间列表
- */
-export const getNewMomentList = async () => {
-	pageNum = 1;
-	const res = await getRecordDayLoveMoment(pageNum, pageSize);
-	momentList.splice(0, momentList.length, ...res);
-	return momentList;
-}
+
 /**
  *  点赞
  */
@@ -75,8 +66,19 @@ export const love = id => {
 	cur.loves += incre;
 	cur.loved = !cur.loved;
 	user.value.loves += incre;
-	loveRecordDayLoveMoment(id, incre);
+	return loveRecordDayLoveMoment(id, incre);
 
+}
+/**
+ *  点赞第二个版本
+ * @param {Object} momentItem 瞬间对象, 注意需要是代理对象
+ */
+export function reallove(momentItem) {
+	let incre = momentItem.loved ? -1 : 1;
+	momentItem.loves += incre;
+	momentItem.loved = !momentItem.loved;
+	user.value.loves += incre;
+	return loveRecordDayLoveMoment(momentItem.id, incre);
 }
 
 /**
@@ -98,6 +100,7 @@ export const star = id => {
 export const getMomentById = async id => {
 	const res = await momentDetail(id)
 	currentMoment.value = res;
+	return res;
 }
 
 /**
@@ -126,15 +129,20 @@ export const getCommentListById = async momentId => {
 export const commentCount = computed(() => commentList.length)
 
 /**
- *  下拉加载更多
+ * 格式化从后端获取的瞬间列表数据
+ * @param {Object} res 瞬间列表数据
  */
-export const scrolltolower = (e) => {
-	pageNum++;
-	getRecordDayLoveMoment(pageNum, pageSize).then(res => {
-		if (res.length == 0) {
-			return toast("没有更多数据了")
-		}
-		momentList.splice(momentList.length, 0, ...res)
-	})
-
+export function formdata(res) {
+	const data = []
+	for (let item of res) {
+		data.push({
+			id: item.id,
+			title: item.title,
+			loves: item.loves,
+			loved: item.loved,
+			user: item['et_user'],
+			cover: item.cover,
+		})
+	}
+	return data;
 }
