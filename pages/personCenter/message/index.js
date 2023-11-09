@@ -26,7 +26,7 @@ export const agree = (message) => {
 	} = message;
 	if (status == 'complete') {
 		uni.navigateTo({
-			url: "/pages/marryDetail/chat/chat?friendId=" + sender.id
+			url: "/pages/loveDetail/chat/chat?friendId=" + sender.id
 		})
 	} else {
 		updateMessage(id).then(() => {

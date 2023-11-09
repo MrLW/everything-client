@@ -32,7 +32,10 @@
 	function getdata(keyword) {
 		return userApi.searchUsers(keyword)
 	}
-
+	/**
+	 * 关注用户
+	 * @param {Object} friendId
+	 */
 	function subscribe(friendId) {
 		userApi.subscribe(friendId).then(() => {
 			toast("关注成功");
@@ -48,6 +51,8 @@
 
 	function endSearch() {
 		userListDisaply.value = 'block';
+		// 重新获取用户列表
+		friends()
 	}
 	// 获取好友列表
 	function friends() {

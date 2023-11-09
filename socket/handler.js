@@ -4,6 +4,12 @@ import {
 import {
 	chatItemList
 } from "../pages/marryDetail/chat";
+import {
+	getMessageList
+} from "../pages/personCenter/message";
+import {
+	toast
+} from "../utils";
 
 export const handler = {
 	addChatItem: function(chatItem) {
@@ -11,5 +17,10 @@ export const handler = {
 		if (!exist) {
 			chatItemList.value.push(chatItem);
 		}
+	},
+	frendApply: function() {
+		toast("您收到一个好友申请~")
+		// 刷新消息列表
+		getMessageList()
 	}
 }

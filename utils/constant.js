@@ -5,7 +5,8 @@ export const SOCKET_EVENT_NAME = {
 	USER_MARRY_AGGRE: '/user/marry/aggre',
 	USER_LOGIN: '/user/login',
 	USER_CHAT_ADD: '/user/chat/add',
-	USER_CHAT_UPDATE_INTOVIEW: "/user/chat/updateIntoView"
+	USER_CHAT_UPDATE_INTOVIEW: "/user/chat/updateIntoView",
+	USER_FRIEND_APPLY: '/user/freind/apply',
 };
 
 export const FAB_PATTERN = {

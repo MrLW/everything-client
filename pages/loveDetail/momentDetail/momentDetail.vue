@@ -58,11 +58,11 @@
 		commentText,
 		commentList,
 		getMomentById,
-		star,
 		addComment,
 		getCommentListById,
 		commentCount,
 		reallove,
+		realstar
 	} from '../index.js';
 	const props = defineProps(["id"]);
 	const commentTextRef = ref();
@@ -82,6 +82,10 @@
 
 	function love() {
 		reallove(moment)
+	}
+
+	function star() {
+		realstar(moment);
 	}
 </script>
 

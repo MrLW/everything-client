@@ -11,7 +11,7 @@
 				</view>
 
 				<view class="agree" :class="[item.status == 'complete' ? 'black': 'red' ]" @click="agree(item)">
-					{{ item.status == 'complete' ? '去聊天' : '同意'}}
+					{{ item.status == 'complete' ? '去聊天' : '关注'}}
 				</view>
 			</view>
 		</view>
@@ -27,7 +27,16 @@
 		messageList,
 		agree
 	} from '.';
+	import * as userApi from '../../../api/user';
 	getMessageList();
+
+	function subscribe(id) {
+		userApi.subscribe(friendId).then(() => {
+			toast("关注成功");
+		}).catch(err => {
+			toast('关注失败');
+		})
+	}
 </script>
 
 <style lang="scss">
@@ -40,6 +49,7 @@
 				display: flex;
 				padding: 10rpx 20rpx;
 				border-bottom: 1rpx solid darkgray;
+				align-items: center;
 
 				.avatarUrl {
 					width: 100rpx;
