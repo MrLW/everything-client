@@ -6,8 +6,11 @@
 
 <script setup>
 	import {
+		useUserStore
+	} from '../../../store/user';
+	const {
 		logout
-	} from '..';
+	} = useUserStore()
 </script>
 
 <style lang="scss">

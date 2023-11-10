@@ -21,25 +21,31 @@
 </template>
 
 <script setup>
-	import {
-		ref,
-		reactive,
-		onMounted,
-	} from 'vue'
-	import {
-		title,
-		modules,
-		goPage,
-		getAllArea,
-	} from '.';
-	import {
-		login
-	} from '../personCenter';
 	import '../../socket/index.js'
-	onMounted(function() {
-		login();
-		getAllArea()
-	})
+	import {
+		goPage
+	} from '../../utils/page'
+	import {
+		useUserStore
+	} from '../../store/user';
+	import {
+		useModuleStore
+	} from '../../store/modules';
+	import {
+		storeToRefs
+	} from 'pinia';
+
+	const userStore = useUserStore();
+	const {
+		login
+	} = userStore;
+	const moduleStore = useModuleStore()
+	const {
+		modules,
+		title
+	} = storeToRefs(moduleStore);
+
+	login();
 </script>
 
 <style lang="scss">

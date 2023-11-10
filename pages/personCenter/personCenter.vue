@@ -51,32 +51,32 @@
 </template>
 
 <script setup>
+	import '../../socket/index.js'
 	import {
-		user,
+		useUserStore
+	} from '../../store/user.js';
+	import {
+		storeToRefs
+	} from 'pinia'
+	import {
+		useAreaStore
+	} from '../../store/area.js';
+
+	const userStore = useUserStore()
+	const areaStore = useAreaStore()
+	const {
+		user
+	} = storeToRefs(userStore)
+	const {
 		goLogin,
 		goSetting,
-		goAdvice,
-		userinfo,
 		goEditUserPage,
+		goAdvice,
 		goMessagePage
-	} from './index.js'
-	import {
-		onMounted,
-		onUpdated,
-	} from 'vue'
-	import {
-		getAllArea
-	} from '../index/index.js';
-	import {
-		SOCKET_EVENT_NAME
-	} from '../../utils/constant.js';
+	} = userStore
 
-	import '../../socket/index.js'
-
-
-
-	userinfo()
-	getAllArea()
+	userStore.getUserinfo();
+	areaStore.getProvinceList()
 </script>
 
 <style lang="scss">

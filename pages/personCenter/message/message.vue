@@ -23,20 +23,28 @@
 
 <script setup>
 	import {
-		getMessageList,
-		messageList,
-		agree
-	} from '.';
-	import * as userApi from '../../../api/user';
-	getMessageList();
+		useMessageStore
+	} from '../../../store/message';
+	import {
+		storeToRefs
+	} from 'pinia'
+	import {
+		useUserStore
+	} from '../../../store/user';
 
-	function subscribe(id) {
-		userApi.subscribe(friendId).then(() => {
-			toast("关注成功");
-		}).catch(err => {
-			toast('关注失败');
-		})
-	}
+	const messageStore = useMessageStore()
+	const userStore = useUserStore()
+	const {
+		messageList
+	} = storeToRefs(messageStore);
+	const {
+		getMessageList
+	} = messageStore;
+	const {
+		subscribe
+	} = userStore;
+
+	getMessageList();
 </script>
 
 <style lang="scss">

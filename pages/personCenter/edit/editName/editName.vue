@@ -9,12 +9,14 @@
 </template>
 
 <script setup>
-	import {
-		saveUsername
-	} from '.';
-	import {
-		user
-	} from '../..';
+	import { storeToRefs } from 'pinia';
+	
+	import { useUserStore } from '../../../../store/user';
+
+	const userStore = useUserStore()
+	const { saveUsername } =  userStore
+	const { user } = storeToRefs(userStore)
+
 </script>
 
 <style lang="scss">

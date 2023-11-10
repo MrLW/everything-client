@@ -5,8 +5,8 @@ import {
 	chatItemList
 } from "../pages/marryDetail/chat";
 import {
-	getMessageList
-} from "../pages/personCenter/message";
+	useMessageStore
+} from "../store/message";
 import {
 	toast
 } from "../utils";
@@ -20,6 +20,9 @@ export const handler = {
 	},
 	frendApply: function() {
 		toast("您收到一个好友申请~")
+		const {
+			getMessageList
+		} = useMessageStore()
 		// 刷新消息列表
 		getMessageList()
 	}

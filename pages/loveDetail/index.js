@@ -33,14 +33,7 @@ export const currentMoment = ref({})
 export const commentText = ref('')
 
 export const commentList = reactive([]);
-/**
- *  进入到瞬间详情
- */
-export const getMomentDetailPage = (id) => {
-	uni.navigateTo({
-		url: "/pages/loveDetail/momentDetail/momentDetail?id=" + id
-	})
-}
+
 
 /**
  *  进入到发布瞬间的页面

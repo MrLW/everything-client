@@ -8,12 +8,14 @@
 </template>
 
 <script setup>
-	import {
-		saveEid
-	} from '.';
-	import {
-		user
-	} from '../..';
+	import { storeToRefs } from 'pinia';
+	
+	import { useUserStore } from '../../../../store/user';
+
+	const userStore = useUserStore()
+	const { saveEid } =  userStore
+	const { user } = storeToRefs(userStore)
+
 </script>
 
 <style lang="scss">

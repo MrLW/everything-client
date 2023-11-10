@@ -16,9 +16,7 @@
 	import {
 		ref
 	} from 'vue'
-	import {
-		getMomentDetailPage
-	} from '..';
+
 	import {
 		getContacts,
 		getFriendMoments
@@ -26,6 +24,9 @@
 	import {
 		reactive
 	} from 'vue'
+	import {
+		getMomentDetailPage
+	} from '../../../utils/page';
 	const persons = ref([]);
 	const grid = ref()
 	const public_momentList = reactive([]);
