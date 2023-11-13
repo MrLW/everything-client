@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="emailView">
-			<input class="email" type="text" placeholder="请输入您的邮箱" v-model="user.email">
+			<input class="email" type="text" placeholder="请输入您的邮箱" v-model="email">
 			<lee-countdown :sendCode="sendEmail" :a="1"></lee-countdown>
 		</view>
 		<view class="verifyView">
@@ -11,17 +11,30 @@
 	</view>
 </template>
 <script setup>
-	import { storeToRefs } from 'pinia';
-	import { useUserStore } from '../../../store/user';
-	import { useLoginStore } from '../../../store/login';
-	
+	import {
+		storeToRefs
+	} from 'pinia';
+	import {
+		useUserStore
+	} from '../../../store/user';
+	import {
+		useLoginStore
+	} from '../../../store/login';
+
 	const useStore = useUserStore()
-	const { user } = storeToRefs(useStore)
+	const {
+		user
+	} = storeToRefs(useStore)
 
 	const loginStore = useLoginStore()
-	const { code } = storeToRefs(loginStore)
-	const { verifyCode, sendEmail } = loginStore
-
+	const {
+		code,
+		email
+	} = storeToRefs(loginStore)
+	const {
+		verifyCode,
+		sendEmail
+	} = loginStore
 </script>
 <style lang="scss">
 	.container {
