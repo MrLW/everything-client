@@ -4,10 +4,7 @@ import {
 import {
 	loginByWx,
 	updateUser,
-	info,
-	userLogout,
 	updateAvatarUrl,
-	updateArea,
 } from '../../api/user.js'
 import {
 	ref
@@ -60,24 +57,7 @@ export const login = async () => {
 		})
 	}
 }
-/**
- *  获取用户信息
- */
-export const userinfo = async () => {
-	const res = await info();
-	user.value = res || {};
-}
 
-/**
- *  跳转到登录页面
- */
-export const goLogin = () => {
-	console.info(user.value)
-	if (user.value.eid) return;
-	uni.navigateTo({
-		url: "/pages/personCenter/login/login",
-	})
-}
 
 /**
  * 选择头像
@@ -103,40 +83,7 @@ export async function submitNickname() {
 		nickname: user.nickname
 	})
 }
-/**
- *  进入设置页面
- */
-export function goSetting() {
-	uni.navigateTo({
-		url: "/pages/personCenter/setting/setting",
-	})
-}
-/**
- *  退出登录
- */
-export async function logout() {
-	user.value = {};
-	uni.removeStorageSync("openid")
-	const token = await uni.getStorageInfoSync("token")
-	userLogout(token);
-	// 回到首页
-	uni.navigateBack().then(() => {})
-}
 
-export function goAdvice() {
-	uni.showToast({
-		title: "待开发",
-		icon: 'none'
-	})
-}
-/**
- *  跳转到用户编辑页面
- */
-export function goEditUserPage() {
-	uni.navigateTo({
-		url: "/pages/personCenter/edit/edit",
-	})
-}
 
 /**
  *  更新用户头像
@@ -156,24 +103,5 @@ export function chooseAvatarUrl() {
 				user.value.avatarUrl = avatarUrl;
 			}
 		})
-	})
-}
-
-/**
- *  更新用户的省市区
- * @param {Object} e 
- */
-export function updateUserArea(e) {
-	const codes = e.detail.value.map(item => item.value);
-	updateArea(codes).then(() => {
-		user.value.province = codes[0]
-		user.value.city = codes[1]
-		user.value.district = codes[2]
-	})
-}
-
-export function goMessagePage() {
-	uni.navigateTo({
-		url: "/pages/personCenter/message/message",
 	})
 }

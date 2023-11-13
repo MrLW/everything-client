@@ -8,7 +8,7 @@
 				</view>
 			</block>
 		</scroll-view>
-		<lee-grid :height="height" ref="grid" @goItemDetail="goItemDetail"></lee-grid>
+		<lee-grid :height="height" ref="grid" @goItemDetail="goItemDetail" :list="public_momentList"></lee-grid>
 	</view>
 
 </template>
@@ -16,20 +16,26 @@
 	import {
 		ref
 	} from 'vue'
-	import {
-		getMomentDetailPage
-	} from '..';
+
 	import {
 		getContacts,
 		getFriendMoments
 	} from '../../../api/user';
+	import {
+		reactive
+	} from 'vue'
+	import {
+		getMomentDetailPage
+	} from '../../../utils/page';
 	const persons = ref([]);
 	const grid = ref()
+	const public_momentList = reactive([]);
 	// 获取联系人列表
 	getContacts().then(res => {
+		if (res.length == 0) return res;
 		persons.value.splice(0, persons.value.length, ...res);
 		getFriendMoments(res[0].id).then(res => {
-			grid.value.syncData(res)
+			public_momentList.splice(0, public_momentList.length, ...formdata(res));
 		})
 	})
 	const res = uni.getSystemInfoSync()

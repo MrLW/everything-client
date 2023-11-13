@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hyoga/uni-socket.io": "^3.0.4"
+    "@hyoga/uni-socket.io": "^3.0.4",
+    "pinia": "^2.1.7"
   },
   "devDependencies": {
     "@vant/auto-import-resolver": "^1.0.1",

@@ -3,7 +3,7 @@
 		<lee-searchuser :getdata="getdata" :subscribe="subscribe" @startSearch="startSearch"
 			@endSearch="endSearch"></lee-searchuser>
 		<view class="userlist" :style="{display: userListDisaply}">
-			<view class="useritem" v-for="item in userList" :key="item.id"
+			<view class="useritem" v-for="item in user.chatContactList" :key="item.id"
 				@click="goFriendChat(item.id, item.username)">
 				<image class="portrait" :src="item.avatarUrl"></image>
 				<view>
@@ -18,29 +18,36 @@
 <script setup>
 	import * as userApi from '../../../api/user';
 	import {
-		toast
-	} from '../../../utils';
-	import {
 		ref
 	} from 'vue'
+	import {
+		useUserStore
+	} from '../../../store/user';
+	import {
+		storeToRefs
+	} from 'pinia';
+	import {
+		goFriendChat
+	} from '../../../utils/page';
+
+	const useStore = useUserStore()
+	const {
+		getChatContacts,
+		subscribe
+	} = useStore;
+	const {
+		user
+	} = storeToRefs(useStore)
+
+
+	getChatContacts();
 
 	const userListDisaply = ref('block');
 	const userList = ref([])
-	// 获取好友列表
-	friends()
 
 	function getdata(keyword) {
 		return userApi.searchUsers(keyword)
 	}
-
-	function subscribe(friendId) {
-		userApi.subscribe(friendId).then(() => {
-			toast("关注成功");
-		}).catch(err => {
-			toast('关注失败');
-		})
-	}
-
 
 	function startSearch() {
 		userListDisaply.value = 'none';
@@ -48,18 +55,8 @@
 
 	function endSearch() {
 		userListDisaply.value = 'block';
-	}
-	// 获取好友列表
-	function friends() {
-		userApi.friends().then(res => {
-			userList.value = res;
-		})
-	}
-	// 进入聊天页面
-	function goFriendChat(friendId, username) {
-		uni.navigateTo({
-			url: "/pages/loveDetail/chat/chat?friendId=" + friendId + '&title=' + username
-		})
+		// 重新获取用户列表
+		getChatContacts()
 	}
 </script>
 

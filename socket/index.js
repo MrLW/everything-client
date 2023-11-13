@@ -40,6 +40,10 @@ export async function connect() {
 		socket.on(SOCKET_EVENT_NAME.USER_CHAT_ADD, (res) => {
 			handler.addChatItem(res)
 		})
+
+		socket.on(SOCKET_EVENT_NAME.USER_FRIEND_APPLY, res => {
+			handler.frendApply();
+		})
 	})
 	return socket;
 }

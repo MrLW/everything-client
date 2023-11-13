@@ -11,7 +11,7 @@
 				</view>
 
 				<view class="agree" :class="[item.status == 'complete' ? 'black': 'red' ]" @click="agree(item)">
-					{{ item.status == 'complete' ? '去聊天' : '同意'}}
+					{{ item.status == 'complete' ? '去聊天' : '关注'}}
 				</view>
 			</view>
 		</view>
@@ -23,10 +23,27 @@
 
 <script setup>
 	import {
-		getMessageList,
-		messageList,
-		agree
-	} from '.';
+		useMessageStore
+	} from '../../../store/message';
+	import {
+		storeToRefs
+	} from 'pinia'
+	import {
+		useUserStore
+	} from '../../../store/user';
+
+	const messageStore = useMessageStore()
+	const userStore = useUserStore()
+	const {
+		messageList
+	} = storeToRefs(messageStore);
+	const {
+		getMessageList
+	} = messageStore;
+	const {
+		subscribe
+	} = userStore;
+
 	getMessageList();
 </script>
 
@@ -40,6 +57,7 @@
 				display: flex;
 				padding: 10rpx 20rpx;
 				border-bottom: 1rpx solid darkgray;
+				align-items: center;
 
 				.avatarUrl {
 					width: 100rpx;

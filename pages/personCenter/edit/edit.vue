@@ -50,7 +50,7 @@
 				<view class="label">地区</view>
 				<view>
 					<uni-data-picker :localdata="provinceList" popup-title="请选择班级" @change="updateUserArea"
-						@nodeclick="onnodeclick" v-model="user.district" :clear-icon="false"></uni-data-picker>
+						 v-model="user.district" :clear-icon="false"></uni-data-picker>
 				</view>
 				<text class="iconfont icon-xiangyoujiantou1"></text>
 			</view>
@@ -60,31 +60,39 @@
 
 <script setup>
 	import {
-		reactive,
-		ref,
-	} from "vue";
-	import {
-		provinceList
-	} from "../../index/index.js";
-	import {
-		user,
 		chooseAvatarUrl,
-		updateUserArea,
 	} from '../index.js'
 	import {
 		showEditDescPage,
 		showEditUsernamePage,
 		showEditEidPage,
-		sexList,
-		updateUserSex,
-		updateUserBirthday,
-	} from '.'
+	} from '../../../utils/page'
+	
 	import {
-		updateBirthday
-	} from "../../../api/user.js";
+		useAreaStore
+	} from "../../../store/area.js";
+	import {
+		storeToRefs
+	} from 'pinia'
+	import {
+		useUserStore
+	} from "../../../store/user.js";
 
-	const onnodeclick = () => {}
-
+	const areaStore = useAreaStore()
+	const userStore = useUserStore()
+	const {
+		provinceList
+	} = storeToRefs(areaStore)
+	const {
+		user,
+		sexList,
+	} = storeToRefs(userStore)
+	const {
+		updateUserArea,
+		updateUserBirthday,
+		updateUserSex,
+	} = userStore
+	
 	function getDate(type) {
 		const date = new Date();
 		let year = date.getFullYear();

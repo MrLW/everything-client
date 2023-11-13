@@ -33,14 +33,7 @@ export const currentMoment = ref({})
 export const commentText = ref('')
 
 export const commentList = reactive([]);
-/**
- *  进入到瞬间详情
- */
-export const getMomentDetailPage = (id) => {
-	uni.navigateTo({
-		url: "/pages/loveDetail/momentDetail/momentDetail?id=" + id
-	})
-}
+
 
 /**
  *  进入到发布瞬间的页面
@@ -54,21 +47,7 @@ export const goCreateMomentPage = () => {
 /**
  *  点赞
  */
-export const love = id => {
-	if (id == currentMoment.value.id) {
-		let incre = currentMoment.value.loved ? -1 : 1;
-		currentMoment.value.loves += incre;
-		currentMoment.value.loved = !currentMoment.value.loved;
-		user.value.loves += incre;
-	}
-	const cur = momentList.find(moment => moment.id == id);
-	let incre = cur.loved ? -1 : 1;
-	cur.loves += incre;
-	cur.loved = !cur.loved;
-	user.value.loves += incre;
-	return loveRecordDayLoveMoment(id, incre);
 
-}
 /**
  *  点赞第二个版本
  * @param {Object} momentItem 瞬间对象, 注意需要是代理对象
@@ -84,14 +63,12 @@ export function reallove(momentItem) {
 /**
  *  收藏
  */
-export const star = id => {
-
-	const incre = currentMoment.value.stared ? -1 : 1
-	currentMoment.value.stars += incre;
-	user.value.stars += incre;
-
-	currentMoment.value.stared = !currentMoment.value.stared;
-	starRecordDayLoveMoment(id, incre)
+export function realstar(moment) {
+	const incre = moment.stared ? -1 : 1
+	moment.stars += incre
+	moment.stared = !moment.stared;
+	user.value.collects += incre;
+	return starRecordDayLoveMoment(moment.id, incre)
 }
 
 /**

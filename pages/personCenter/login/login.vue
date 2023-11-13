@@ -12,11 +12,29 @@
 </template>
 <script setup>
 	import {
-		email,
+		storeToRefs
+	} from 'pinia';
+	import {
+		useUserStore
+	} from '../../../store/user';
+	import {
+		useLoginStore
+	} from '../../../store/login';
+
+	const useStore = useUserStore()
+	const {
+		user
+	} = storeToRefs(useStore)
+
+	const loginStore = useLoginStore()
+	const {
 		code,
-		sendEmail,
-		verifyCode
-	} from './index.js';
+		email
+	} = storeToRefs(loginStore)
+	const {
+		verifyCode,
+		sendEmail
+	} = loginStore
 </script>
 <style lang="scss">
 	.container {

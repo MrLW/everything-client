@@ -36,7 +36,6 @@
 	} from 'vue'
 	import {
 		formdata,
-		getMomentDetailPage,
 		reallove,
 	} from '..';
 	import {
@@ -49,6 +48,9 @@
 		currentSocket
 	} from '../../../socket';
 	import {
+		useUserStore
+	} from '../../../store/user';
+	import {
 		toast
 	} from '../../../utils';
 	import {
@@ -56,13 +58,20 @@
 		PAGE
 	} from '../../../utils/constant';
 	import {
-		user,
-		userinfo
-	} from '../../personCenter';
+		storeToRefs
+	} from 'pinia'
+	import {
+		getMomentDetailPage
+	} from '../../../utils/page';
+
+	const userStore = useUserStore()
+	userStore.getUserinfo()
+	const {
+		user
+	} = storeToRefs(userStore)
 
 	onMounted(function() {
 		// 获取用户信息
-		userinfo()
 		publicMoments();
 	})
 

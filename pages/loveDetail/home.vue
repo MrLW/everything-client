@@ -1,67 +1,46 @@
 <template>
 	<view class="container">
-		<lee-grid ref="grid" @goItemDetail="getMomentDetailPage" :height="height" @loadmore="loadmore" @love="love"
-			:list="public_momentList"></lee-grid>
+		<lee-grid ref="grid" @goItemDetail="getMomentDetailPage" :height="height" @loadmore="loadmore" @love="reallove"
+			:list="momentList"></lee-grid>
 	</view>
 </template>
 
 <script setup>
 	import {
-		onMounted,
-		reactive,
 		ref
 	} from 'vue'
 	import {
-		getRecordDayLoveMoment
-	} from '../../api/recordDay.js';
+		useMomentStore
+	} from '../../store/moment';
 	import {
-		toast
-	} from '../../utils/index.js';
-
+		storeToRefs
+	} from 'pinia';
 	import {
-		getMomentDetailPage,
-		goCreateMomentPage,
-		formdata,
-		reallove
-	} from './index.js'
+		getMomentDetailPage
+	} from '../../utils/page.js';
+	const momentStore = useMomentStore()
+	const {
+		reallove,
+		getMomentList,
+		getNextPageMomentList,
+	} = momentStore;
+	const {
+		momentList
+	} = storeToRefs(momentStore)
 
 	const grid = ref();
-	let pageNum = 1,
-		pageSize = 8;
-	const public_momentList = reactive([]);
 	const res = uni.getSystemInfoSync()
 	const height = ref(((res.screenHeight * (750 / res.windowWidth)) - 80 - 100)) //将px 转换rpx
 
-	onMounted(function() {
-		getMomentList()
-	})
+	getMomentList()
 
 	/**
 	 *  下拉加载更多
 	 */
-	const loadmore = (e) => {
-		pageNum++;
-		getRecordDayLoveMoment(pageNum, pageSize).then(res => {
+	function loadmore() {
+		getNextPageMomentList().then(() => {
 			grid.value.loadmoreDone()
-			if (res.length == 0) {
-				return toast("没有更多数据了")
-			}
-			public_momentList.splice(public_momentList.length, 0, ...formdata(res))
 		})
-	}
-
-	/**
-	 *  获取瞬间列表
-	 */
-	function getMomentList() {
-		getRecordDayLoveMoment(pageNum, pageSize).then(res => {
-			public_momentList.splice(0, 0, ...formdata(res))
-		})
-	}
-
-	function love(id) {
-		const moment = public_momentList.find(item => item.id == id);
-		moment && reallove(moment);
 	}
 </script>
 
