@@ -39,3 +39,15 @@ export function goFriendChat(friendId, username) {
 		url: "/pages/loveDetail/chat/chat?friendId=" + friendId + '&title=' + username
 	})
 }
+// 进入创建TODO页面
+export function goCreateTodoPage() {
+	uni.navigateTo({
+		url: "/pages/recordTodo/createTodo/createTodo"
+	})
+}
+// 进入编辑TODO页面
+export function goEditTodoPage(id) {
+	uni.navigateTo({
+		url: "/pages/recordTodo/editTodo/editTodo?id=" + id
+	})
+}

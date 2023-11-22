@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@hyoga/uni-socket.io": "^3.0.4",
+    "lunar-javascript": "^1.6.7",
     "pinia": "^2.1.7"
   },
   "devDependencies": {

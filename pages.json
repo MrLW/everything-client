@@ -148,8 +148,31 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/recordTodo/recordTodo",
+			"style": {
+				"navigationBarTitleText": "记事",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/recordTodo/createTodo/createTodo",
+			"style": {
+				"navigationBarTitleText": "创建",
+				"enablePullDownRefresh": false
+			}
+
 		}
-	],
+	    ,{
+            "path" : "pages/recordTodo/editTodo/editTodo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "编辑",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
