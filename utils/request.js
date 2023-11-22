@@ -7,7 +7,7 @@ function service(options = {}) {
 	options.header = {
 		'content-type': 'application/json',
 	};
-	if(token) options.header['Authorization'] = `Bearer ${token}`
+	if (token) options.header['Authorization'] = `Bearer ${token}`
 	// resolved是返回成功数据，rejected返回错误数据
 	return new Promise((resolved, rejected) => {
 		options.success = (res) => {

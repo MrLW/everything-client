@@ -16,7 +16,9 @@ export const useModuleStore = defineStore('module', () => {
 		}, {
 			id: 2,
 			name: '记事',
-			className: 'icon-jishiben'
+			className: 'icon-jishiben',
+			path: '/pages/recordTodo/recordTodo'
+
 		},
 		{
 			id: 1,

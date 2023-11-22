@@ -1,24 +1,25 @@
 <template>
-	<view class="container" v-if="isShow">
-		<view class="background">
-		</view>
-		<view class="bgWord">{{ month }}月</view>
-		<view class="calendar" @touchstart="startMove" @touchmove="moving" @touchend="endMove">
-			<view class="header">
-				<view class="day" v-for="(header, index) in headers">{{ header }}</view>
-			</view>
-			<view class="data">
-				<view class="currentDaysV2">
-					<view class="col" v-for="row in daysv2"
-						:style="{ transform: `translateX(${ position - totalWidth }rpx)`,transition: `${distanceTransition}` }">
-						<view class="day" v-for="day in row" :class="{disable: !day.enable, active: day.isActive }"
-							@click="selectDay(day.year, day.month, day.day)">
-							<view class="dayDetail">
-								<view class="yang">
-									{{ day.day }}
-								</view>
-								<view class="ying">
-									{{ day.lunar }}
+	<Transition appear name="cal">
+		<view class="container" v-if="isShow">
+			<view class="background"></view>
+			<view class="bgWord">{{ month }}月</view>
+			<view class="calendar" @touchstart="startMove" @touchmove="moving" @touchend="endMove">
+				<view class="header">
+					<view class="day" v-for="(header, index) in headers">{{ header }}</view>
+				</view>
+				<view class="data">
+					<view class="currentDays">
+						<view class="col" v-for="row in calendarData"
+							:style="{ transform: `translateX(${ position - totalWidth }rpx)`,transition: `${distanceTransition}` }">
+							<view class="day" v-for="day in row" :class="{disable: !day.enable, active: day.isActive }"
+								@click="selectDay(day)">
+								<view class="dayDetail">
+									<view class="yang">
+										{{ day.day }}
+									</view>
+									<view class="ying">
+										{{ day.lunar }}
+									</view>
 								</view>
 							</view>
 						</view>
@@ -26,31 +27,43 @@
 				</view>
 			</view>
 		</view>
-	</view>
+	</Transition>
 </template>
 
 <script setup>
 	import {
 		nextTick,
+		onMounted,
 		ref
 	} from 'vue'
 	import {
 		Lunar,
 	} from 'lunar-javascript'
+	defineProps(['isShow'])
 	const emit = defineEmits(['selectDay'])
-	const isShow = ref(true);
 	const headers = ref(['一', '二', '三', '四', '五', '六', '日'])
-	const daysv2 = ref([])
+	const calendarData = ref([])
 
 	const distanceTransition = ref('');
-	const year = ref(2023);
-	const month = ref(7);
-	const day = 14;
+	const now = new Date()
+	const year = ref(now.getFullYear());
+	const month = ref(now.getMonth() + 1);
+	const day = now.getDate();
 
 	// 每列的宽度
 	const cellWidth = 80;
 	// 日历的总宽度
 	const totalWidth = cellWidth * 7;
+	// 开始移动时手指的位置
+	let startX = 0;
+	// 手指滑动的距离
+	let distance = ref(0);
+	// 日历移动的距离, 默认为: totalWidth(因为在style中会 减去 totalWidth ), 即在原点处
+	let position = ref(totalWidth);
+
+	onMounted(function() {
+		calendarData.value.splice(0, 0, ...getDaysByMonth(year.value, month.value));
+	})
 
 	/**
 	 * 获取某个月的在日历上展示的所有日子
@@ -141,46 +154,31 @@
 	 * @param {Object} month
 	 * @param {Object} day
 	 */
-	function selectDay(year, month, day) {
-		daysv2.value.forEach(weekdays => weekdays.forEach(dayItem => dayItem.isActive = dayItem.year == year && month ==
-			dayItem.month && dayItem.day == day))
+	function selectDay(item) {
+		if (!item.enable) {
+			if (item.year > year.value || (item.year == year.value && item.month > month.value)) {
+				nextMonth();
+			} else {
+				preMonth();
+			}
+			return;
+		}
+		calendarData.value.forEach(weekdays => weekdays.forEach(dayItem => dayItem.isActive = dayItem.year == item.year &&
+			item
+			.month ==
+			dayItem.month && dayItem.day == item.day))
 		emit && emit('selectDay', {
-			year,
-			month,
-			day
+			year: item.year,
+			month: item.month,
+			day: item.day,
 		})
-
-		isShow.value = false;
 	}
-
-	function getDaysByMonthV2(year, month) {
-		const res = [
-			[],
-			[],
-			[],
-			[],
-			[],
-			[],
-			[]
-		]
-		return getDaysByMonth(year, month);
-
-		// return res;
-	}
-
-	daysv2.value = getDaysByMonthV2(year.value, month.value);
-
-	// 开始移动时手指的位置
-	let startX = 0;
-	let distance = ref(0); // 手指滑动的距离
-	// 日历移动的距离, 默认为: totalWidth(因为在style中会 减去 totalWidth ), 即在原点处
-	let position = ref(totalWidth);
 
 	function startMove(e) {
 		// 先判断当前数据一共是几个月的数据
-		if (daysv2.value.length == 21) {
-			daysv2.value.splice(0, 7);
-			daysv2.value.splice(7, 7);
+		if (calendarData.value.length == 21) {
+			calendarData.value.splice(0, 7);
+			calendarData.value.splice(7, 7);
 		}
 		distanceTransition.value = ''
 		startX = e.changedTouches[0].clientX;
@@ -189,12 +187,12 @@
 		const m = month.value;
 		// 1. 添加上个月 的数据
 		const preRes = m != 1 ? getDaysByMonth(y, m - 1) : getDaysByMonth(y - 1, 12)
-		daysv2.value.splice(0, 0, ...preRes);
+		calendarData.value.splice(0, 0, ...preRes);
 
 		// 2. 添加下个月的数据
 		const nextRes = m != 12 ? getDaysByMonth(y, m + 1) : getDaysByMonth(y + 1, 1);
 
-		daysv2.value.splice(daysv2.value.length, 0, ...nextRes);
+		calendarData.value.splice(calendarData.value.length, 0, ...nextRes);
 
 		position.value = 0;
 	}
@@ -205,7 +203,25 @@
 		position.value = distance.value = (d * (750 / res.windowWidth)) //将px 转换rpx
 	}
 
+	function endMove() {
+		if (distance.value > cellWidth * 2) {
+			preMonth();
+		} else if (distance.value < -cellWidth * 2) {
+			nextMonth();
+		} else {
+			currentMonth();
+		}
+		// 重置 
+		distance.value = 0;
+	}
+
+	function currentMonth() {
+		position.value = 0;
+	}
+
 	function nextMonth() {
+		// 增加过渡效果
+		distanceTransition.value = 'transform .4s linear';
 
 		position.value = -totalWidth;
 
@@ -222,12 +238,14 @@
 
 		setTimeout(function() {
 			distanceTransition.value = ''
-			daysv2.value.splice(0, 14);
+			calendarData.value.splice(0, 14);
 			position.value = totalWidth;
 		}, 400)
 	}
 
 	function preMonth() {
+		// 增加过渡效果
+		distanceTransition.value = 'transform .4s linear';
 		// 计算当前查看的月份和现在月份的差值
 		if (month.value > 1) {
 			month.value--;
@@ -241,28 +259,17 @@
 		}
 		position.value = totalWidth;
 		setTimeout(function() {
-			daysv2.value.splice(7, 14);
+			calendarData.value.splice(7, 14);
 		}, 400)
 	}
 
-	function endMove() {
-		// 增加过渡效果
-		distanceTransition.value = 'transform .4s linear';
 
-		if (distance.value > cellWidth * 2) {
-			preMonth()
-		} else if (distance.value < -cellWidth * 2) {
-			nextMonth()
-		} else {
-			position.value = 0;
-		}
-		// 重置 
-		distance.value = 0;
-	}
 
 	function switchShow() {
 		isShow.value = !isShow.value
 	}
+
+	var isTest = ref(true)
 
 	defineExpose({
 		switchShow,
@@ -272,8 +279,26 @@
 </script>
 
 <style lang="scss">
+	// 设置日历的过渡动画
+	.cal-enter-from,
+	.cal-leave-to {
+		opacity: 0;
+	}
+
+	.cal-enter-active,
+	.cal-leave-active {
+		transition: all .4s linear;
+	}
+
+	.cal-enter-to,
+	.cal-leave-from {
+		opacity: 1;
+	}
+
+
 	.container {
 		width: 100%;
+		position: absolute;
 
 		// 设置一个背景板
 		.background {
@@ -334,7 +359,7 @@
 
 
 
-			.currentDaysV2 {
+			.currentDays {
 				display: flex;
 				overflow: hidden;
 
