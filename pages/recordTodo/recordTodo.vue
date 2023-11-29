@@ -16,7 +16,6 @@
 			</view>
 		</view>
 	</view>
-	<view class="line"></view>
 	<lee-calendar ref="canendar" @selectDay="selectDay" :isShow="show"></lee-calendar>
 	<view class="todolist" v-if="todolist.length > 0 ">
 		<view class="todoitem" v-for="(todoitem, index) in todolist" :key="todoitem.id"
@@ -33,47 +32,49 @@
 	<uni-fab ref="fab" :pattern="FAB_PATTERN" horizontal="right" @fabClick="goCreateTodoPage"></uni-fab>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import {
 		storeToRefs
 	} from 'pinia';
 	import {
 		onMounted,
-		ref
+		ref,
+		Ref,
 	} from 'vue'
 	import {
 		useTodoStore,
 		TODO_TAG,
+		Todo,
+		TodoArray,
 	} from '../../store/todo';
-	import leeEmpty from '../../components/lee-empty/lee-empty.vue'
-	import {
-		FAB_PATTERN
-	} from '../../utils/constant';
+	import leeEmpty from '../../components/lee-empty/lee-empty'
+	import { FAB_PATTERN } from '../../utils/constant';
 	import {
 		goCreateTodoPage,
 		goEditTodoPage,
 	} from '../../utils/page';
+	const xialaDirect = ref(-90)
 	const show = ref(false)
 	const todoStore = useTodoStore();
-	const xialaDirect = ref(-90)
 	const {
 		updateDone,
 		getTodoList,
 		selectDay,
 		filterTodo,
 	} = todoStore;
+
 	const {
 		todolist,
 		selectTag,
 		currentTaskDay,
-	} = storeToRefs(todoStore)
+	} = storeToRefs(todoStore);
 
-	onMounted(function() {
+	onMounted(function () {
 		getTodoList()
 	})
 	const canendar = ref();
 
-	function complete(item) {
+	function complete(item : Todo) {
 		return updateDone(item)
 	}
 

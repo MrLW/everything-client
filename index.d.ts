@@ -1,0 +1,1 @@
+declare module "@hyoga/uni-socket.io"
