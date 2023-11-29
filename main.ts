@@ -25,16 +25,12 @@ const app = new Vue({
 app.$mount()
 // #endif
 // #ifdef VUE3
-const {
-	uniPlatform
-} = uni.getSystemInfoSync();
-
 import {
 	createSSRApp
 } from 'vue'
 import {
 	connect
-} from './socket';
+} from './socket/index';
 import {
 	createPinia
 } from 'pinia'

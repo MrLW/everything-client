@@ -19,9 +19,8 @@
 		</view>
 	</view>
 </template>
-
 <script setup>
-	import '../../socket/index.js'
+	import '../../socket'
 	import {
 		goPage
 	} from '../../utils/page'

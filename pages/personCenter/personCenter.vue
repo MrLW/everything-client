@@ -51,7 +51,7 @@
 </template>
 
 <script setup>
-	import '../../socket/index.js'
+	import '../../socket/index'
 	import {
 		useUserStore
 	} from '../../store/user.js';

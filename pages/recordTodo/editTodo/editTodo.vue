@@ -24,7 +24,7 @@
 				开始时间
 			</view>
 			<picker class="input" mode="time" :value="todo.startTime" start="09:01" end="21:01" @change="selectTime">
-				<input class="" type="text" v-model="todo.startTime" disabled>
+				<input style="font-size: 20rpx;" type="text" v-model="todo.startTime" disabled>
 			</picker>
 		</view>
 		<view class="item">
@@ -44,7 +44,7 @@
 	</view>
 </template>
 
-<script setup>
+<script setup lang="ts">
 	import {
 		onMounted,
 		ref
@@ -71,7 +71,7 @@
 	} = storeToRefs(todoStore)
 	const canendar = ref();
 	const calShow = ref(false);
-	onMounted(function() {
+	onMounted(function () {
 		getTodoById(props.id)
 	})
 
